@@ -20,7 +20,7 @@ export default function DashboardHome() {
 
   const fetchHero = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/hero");
+      const res = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/hero");
       setHero({
         ...hero,
         title: res.data.title,
@@ -48,7 +48,7 @@ export default function DashboardHome() {
     }
 
     try {
-      await axios.put("http://localhost:5000/api/hero", formData);
+      await axios.put("https://hometoolsprojectbackendd-production.up.railway.app/api/hero", formData);
       showPopups("تم تحديث الـ Hero بنجاح");
       fetchHero();
     } catch (err) {
@@ -102,7 +102,7 @@ export default function DashboardHome() {
   // ---------------- FETCH PRODUCTS ----------------
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/products");
+      const res = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/products");
 
       let products = [];
       if (Array.isArray(res.data)) {
@@ -162,7 +162,7 @@ export default function DashboardHome() {
 
       files.forEach((file) => formData.append("images", file));
 
-      await axios.post("http://localhost:5000/api/products", formData);
+      await axios.post("https://hometoolsprojectbackendd-production.up.railway.app/api/products", formData);
 
       showPopup("تمت إضافة المنتج بنجاح 🎉", "success");
 
@@ -186,7 +186,7 @@ export default function DashboardHome() {
   // ---------------- DELETE PRODUCT ----------------
   const deleteProduct = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`);
+      await axios.delete(`https://hometoolsprojectbackendd-production.up.railway.app/api/products/${id}`);
       showPopup("تم حذف المنتج");
       fetchProducts();
     } catch (err) {
@@ -245,7 +245,7 @@ export default function DashboardHome() {
           <label className="image-label">صورة الخلفية الحالية:</label>
           {hero.currentBackground && (
             <img 
-              src={`http://localhost:5000/uploads/${hero.currentBackground}`} 
+              src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${hero.currentBackground}`} 
               className="hero-current-image" 
               alt="Current Hero Background"
             />
@@ -372,7 +372,7 @@ export default function DashboardHome() {
                 }
 
                 await axios.put(
-                  `http://localhost:5000/api/products/${editPopup.product._id}`,
+                  `https://hometoolsprojectbackendd-production.up.railway.app/api/products/${editPopup.product._id}`,
                   fd
                 );
 
@@ -405,7 +405,7 @@ export default function DashboardHome() {
                 className="delete-button-confirm"
                 onClick={() => {
                   axios
-                    .delete(`http://localhost:5000/api/products/${confirmDelete.id}`)
+                    .delete(`https://hometoolsprojectbackendd-production.up.railway.app/api/products/${confirmDelete.id}`)
                     .then(() => {
                       showPopup("تم حذف المنتج");
                       setConfirmDelete({ show: false, id: null });
@@ -520,7 +520,7 @@ export default function DashboardHome() {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={`http://localhost:5000/uploads/${img}`}
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                             alt="product"
                             className="product-thumb"
                         />
@@ -643,7 +643,7 @@ export default function DashboardHome() {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={`http://localhost:5000/uploads/${img}`}
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                             alt="product"
                             className="product-thumb"
                         />

@@ -24,7 +24,7 @@ export default function ContactManagement() {
   }, []);
 
   const fetchContacts = async () => {
-    const res = await axios.get("http://localhost:5000/api/contacts");
+    const res = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/contacts");
     setSavedContacts(res.data);
   };
 
@@ -40,7 +40,7 @@ export default function ContactManagement() {
     e.preventDefault();
 
     for (let contact of contacts) {
-      await axios.post("http://localhost:5000/api/contacts", contact);
+      await axios.post("https://hometoolsprojectbackendd-production.up.railway.app/api/contacts", contact);
     }
 
     setContacts([{ address: "", phone: "", facebook: "", twitter: "", instagram: "" }]);
@@ -49,7 +49,7 @@ export default function ContactManagement() {
 
   // إضافة صف جديد عبر البوب اب
   const handleAddPopupSubmit = async () => {
-    await axios.post("http://localhost:5000/api/contacts", newPopupContact);
+    await axios.post("https://hometoolsprojectbackendd-production.up.railway.app/api/contacts", newPopupContact);
     setAddPopup(false);
 
     setNewPopupContact({
@@ -71,7 +71,7 @@ export default function ContactManagement() {
 
   const saveEdit = async (index) => {
     const updatedContact = savedContacts[index];
-    await axios.put(`http://localhost:5000/api/contacts/${updatedContact._id}`, updatedContact);
+    await axios.put(`https://hometoolsprojectbackendd-production.up.railway.app/api/contacts/${updatedContact._id}`, updatedContact);
 
     setEditPopup(null);
     fetchContacts();
@@ -79,7 +79,7 @@ export default function ContactManagement() {
 
   const deleteContact = async (index) => {
     const contactToDelete = savedContacts[index];
-    await axios.delete(`http://localhost:5000/api/contacts/${contactToDelete._id}`);
+    await axios.delete(`https://hometoolsprojectbackendd-production.up.railway.app/api/contacts/${contactToDelete._id}`);
     fetchContacts();
   };
 

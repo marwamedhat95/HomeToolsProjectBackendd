@@ -12,7 +12,7 @@ export default function Contact() {
 
   const fetchContacts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/contacts");
+      const res = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/contacts");
       setContacts(res.data);
     } catch (err) {
       console.error("Error fetching contacts", err);

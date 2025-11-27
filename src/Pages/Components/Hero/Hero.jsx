@@ -19,7 +19,7 @@ fetchHero();
 
 const fetchHero = async () => {
   try {
-    const res = await axios.get("http://localhost:5000/api/hero");
+    const res = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/hero");
     console.log("Response from API:", res.data); // هنا نتأكد من البيانات
     const data = res.data || {};
     setHero({
@@ -28,7 +28,7 @@ const fetchHero = async () => {
       buttonText: data.buttonText || "",
       buttonLink: data.buttonLink || "#",
       background: data.background
-        ? `http://localhost:5000/uploads/${encodeURIComponent(data.background)}`
+        ? `https://hometoolsprojectbackendd-production.up.railway.app/uploads/${encodeURIComponent(data.background)}`
         : "",
     });
   } catch (err) {

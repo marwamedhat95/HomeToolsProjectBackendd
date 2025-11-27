@@ -14,7 +14,7 @@ export default function AdvertisementsManagement() {
 
   const fetchAds = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/ads");
+      const res = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/ads");
       setAds(res.data || []);
     } catch (err) {
       console.error(err);
@@ -30,7 +30,7 @@ export default function AdvertisementsManagement() {
 
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/ads", formData, {
+      const res = await axios.post("https://hometoolsprojectbackendd-production.up.railway.app/api/ads", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setAds([res.data, ...ads]);
@@ -46,7 +46,7 @@ export default function AdvertisementsManagement() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/ads/${id}`);
+      await axios.delete(`https://hometoolsprojectbackendd-production.up.railway.app/api/ads/${id}`);
       setAds(ads.filter(ad => ad._id !== id));
     } catch (err) {
       console.error(err);
@@ -86,7 +86,7 @@ export default function AdvertisementsManagement() {
         {ads.map(ad => (
           <div key={ad._id} className="border p-3 rounded shadow relative">
             <img
-              src={`http://localhost:5000/uploads/${ad.image}`}
+              src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${ad.image}`}
               alt="ad"
               className="w-full h-40 object-cover rounded mb-2"
             />

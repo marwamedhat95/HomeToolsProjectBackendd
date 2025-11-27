@@ -6,7 +6,7 @@ export default function Advertisements() {
   const [ads, setAds] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/ads")
+    axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/ads")
       .then(res => setAds(res.data))
       .catch(err => console.log(err));
   }, []);
@@ -25,7 +25,7 @@ export default function Advertisements() {
           id={`ad-${ad._id}`}                            // ← unique id
         >
           <img
-            src={`http://localhost:5000/uploads/${ad.image}`}
+            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${ad.image}`}
             alt="إعلان"
             className={`w-full rounded-lg shadow-lg cursor-pointer hover:opacity-90 transition mb-4 ad-img ad-img-${index}`}
           />

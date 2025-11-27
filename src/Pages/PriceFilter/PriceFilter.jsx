@@ -9,7 +9,7 @@ const navigate = useNavigate();
 const [products, setProducts] = useState([]);
 
 useEffect(() => {
-  axios.get("http://localhost:5000/api/products")
+  axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/products")
     .then(res => {
       const allProducts = Array.isArray(res.data) ? res.data : [];
       // تصفية المنتجات التي سعرها أقل من أو يساوي القيمة الممررة
@@ -39,7 +39,7 @@ return (
                         onClick={() => navigate(`/product/${p._id}`)}
                     >
                         <img
-                            src={`http://localhost:5000/uploads/${p.images?.[0]}`}
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${p.images?.[0]}`}
                             className="product-image-filter"
                             alt={p.name}
                         />

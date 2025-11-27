@@ -48,7 +48,7 @@ export default function Wishlist() {
                         onClick={() => navigate(`/product/${item._id}`)}
                     >
                         <img
-                            src={`http://localhost:5000/uploads/${item.images?.[0]}`}
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${item.images?.[0]}`}
                             alt={item.name}
                             className="wishlist-image"
                         />

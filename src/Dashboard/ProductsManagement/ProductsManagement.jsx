@@ -26,7 +26,7 @@ export default function ProductsManagement() {
 
     const fetchProducts = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/products");
+            const res = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/products");
             setProducts(res.data);
         } catch (error) {
             console.log(error);
@@ -35,7 +35,7 @@ export default function ProductsManagement() {
 
     const fetchCategories = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/categories");
+            const res = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/categories");
             setCategories(res.data);
         } catch (error) {
             console.log(error);
@@ -60,11 +60,11 @@ export default function ProductsManagement() {
 
     try {
         if (editId) {
-            await axios.put(`http://localhost:5000/api/products/${editId}`, formData);
+            await axios.put(`https://hometoolsprojectbackendd-production.up.railway.app/api/products/${editId}`, formData);
             setShowEditModal(false);
             setEditId(null);
         } else {
-            await axios.post("http://localhost:5000/api/products", formData);
+            await axios.post("https://hometoolsprojectbackendd-production.up.railway.app/api/products", formData);
         }
 
         // Reset form
@@ -90,7 +90,7 @@ export default function ProductsManagement() {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:5000/api/products/${deleteId}`);
+            await axios.delete(`https://hometoolsprojectbackendd-production.up.railway.app/api/products/${deleteId}`);
             setShowDeleteModal(false);
             setDeleteId(null);
             fetchProducts();
@@ -181,7 +181,7 @@ export default function ProductsManagement() {
         {/* Images */}
       <div className="flex gap-2 overflow-x-auto mb-2">
         {p.images?.map((img, idx) => (
-          <img key={idx} src={`http://localhost:5000/uploads/${img}`} className="w-24 h-24 rounded-md" />
+          <img key={idx} src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`} className="w-24 h-24 rounded-md" />
         ))}
       </div>
 

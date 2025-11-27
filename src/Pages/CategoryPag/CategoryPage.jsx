@@ -12,12 +12,12 @@ const [loading, setLoading] = useState(true);
 useEffect(() => {
   const fetchData = async () => {
     try {
-      const catRes = await axios.get("http://localhost:5000/api/categories");
+      const catRes = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/categories");
       const allCategories = Array.isArray(catRes.data) ? catRes.data : [];
       const category = allCategories.find(c => c._id === id);
       if (category) setCategoryName(category.name);
 
-      const prodRes = await axios.get("http://localhost:5000/api/products");
+      const prodRes = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/products");
       const allProducts = Array.isArray(prodRes.data) ? prodRes.data : [];
       const filtered = allProducts.filter(p => p.category?._id === id);
       setProducts(filtered);
@@ -42,7 +42,7 @@ onClick={() => navigate(`/product/${p._id}`)}
 >
 {p.images?.[0] && (
 <img
-src={`http://localhost:5000/uploads/${p.images[0]}`}
+src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${p.images[0]}`}
 alt={p.name}
 className="w-full h-48 object-cover rounded"
 />

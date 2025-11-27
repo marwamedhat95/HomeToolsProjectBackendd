@@ -15,8 +15,8 @@ export default function Products() {
     }, []);
 
     const fetchData = async () => {
-        const prodRes = await axios.get("http://localhost:5000/api/products");
-        const catRes = await axios.get("http://localhost:5000/api/categories");
+        const prodRes = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/products");
+        const catRes = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/categories");
         setProducts(prodRes.data);
         setCategories(catRes.data);
     };
@@ -50,7 +50,7 @@ export default function Products() {
         <div className="products-grid">
             {filteredProducts.map(p => (
                 <div key={p._id} className="product-card">
-                    {p.images?.[0] && <img src={`http://localhost:5000/uploads/${p.images[0]}`} alt={p.name} />}
+                    {p.images?.[0] && <img src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${p.images[0]}`} alt={p.name} />}
                     <div className="product-cardtext">
                     <h3 className="product-name">{p.name}</h3>
                    <div className="text_body">

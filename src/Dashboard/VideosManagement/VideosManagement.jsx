@@ -18,7 +18,7 @@ export default function VideosManagement() {
   }, []);
 
   const fetchVideos = async () => {
-    const res = await axios.get("http://localhost:5000/api/videos");
+    const res = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/videos");
     setVideos(res.data);
   };
 
@@ -32,7 +32,7 @@ export default function VideosManagement() {
     else formData.append("url", url);
 
     try {
-      await axios.put(`http://localhost:5000/api/videos/${editPopup._id}`, formData);
+      await axios.put(`https://hometoolsprojectbackendd-production.up.railway.app/api/videos/${editPopup._id}`, formData);
 
       setEditPopup(null);
       setTitle("");
@@ -56,7 +56,7 @@ export default function VideosManagement() {
   };
 
   const handleDelete = async () => {
-    await axios.delete(`http://localhost:5000/api/videos/${deletePopup}`);
+    await axios.delete(`https://hometoolsprojectbackendd-production.up.railway.app/api/videos/${deletePopup}`);
     setDeletePopup(null);
     fetchVideos();
   };
@@ -71,7 +71,7 @@ export default function VideosManagement() {
     if (type === "file" && file) formData.append("file", file);
     else formData.append("url", url);
 
-    await axios.post("http://localhost:5000/api/videos", formData);
+    await axios.post("https://hometoolsprojectbackendd-production.up.railway.app/api/videos", formData);
 
     setTitle("");
     setUrl("");
@@ -131,7 +131,7 @@ export default function VideosManagement() {
               <p className="text-sm mb-1">القسم: {translateCategory(v.category)}</p>
 
               {v.type === "file" && (
-                <video src={`http://localhost:5000/uploads/videos/${v.filename}`} className="w-full h-32" />
+                <video src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/videos/${v.filename}`} className="w-full h-32" />
               )}
 
               {v.type === "youtube" && (
@@ -204,7 +204,7 @@ export default function VideosManagement() {
             <button className="close" onClick={() => setPreviewPopup(null)}>✖</button>
             <h3 className="font-bold mb-2">{previewPopup.title}</h3>
             {previewPopup.type === "file" && (
-              <video src={`http://localhost:5000/uploads/videos/${previewPopup.filename}`} controls autoPlay className="w-full" />
+              <video src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/videos/${previewPopup.filename}`} controls autoPlay className="w-full" />
             )}
             {previewPopup.type === "youtube" && (
               <iframe width="100%" height="400" src={`https://www.youtube.com/embed/${extractYouTubeId(previewPopup.url)}`} title={previewPopup.title} frameBorder="0" allowFullScreen></iframe>

@@ -19,7 +19,7 @@ fetchProduct();
 
 const fetchProduct = async () => {
 try {
-const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+const res = await axios.get(`https://hometoolsprojectbackendd-production.up.railway.app/api/products/${id}`);
 setProduct(res.data);
 } catch (error) {
 console.log(error);
@@ -70,7 +70,7 @@ return (
                         {product.images.map((img, idx) => (
                             <img
                                 key={idx}
-                                src={`http://localhost:5000/uploads/${img}`}
+                                src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                                 alt={product.name}
                                 className="main-image"
                             />
@@ -81,7 +81,7 @@ return (
                         {product.images.map((img, idx) => (
                             <img
                                 key={idx}
-                                src={`http://localhost:5000/uploads/${img}`}
+                                src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                                 alt={product.name}
                                 className="thumb-image"
                             />

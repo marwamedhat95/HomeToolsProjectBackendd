@@ -24,7 +24,7 @@ export default function VideosPage() {
   }, []);
 
   const fetchVideos = async () => {
-    const res = await axios.get("http://localhost:5000/api/videos");
+    const res = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/videos");
     setVideos(res.data);
   };
 
@@ -78,7 +78,7 @@ export default function VideosPage() {
                 <div className="video-thumbnail-container">
                   {v.type === "file" && (
                     <video
-                      src={`http://localhost:5000/uploads/videos/${v.filename}`}
+                      src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/videos/${v.filename}`}
                       className="video-thumbnail"
                     />
                   )}
@@ -112,7 +112,7 @@ export default function VideosPage() {
 
               {selectedVideo.type === "file" && (
                 <video
-                  src={`http://localhost:5000/uploads/videos/${selectedVideo.filename}`}
+                  src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/videos/${selectedVideo.filename}`}
                   controls
                   autoPlay
                   className="modal-video-player"

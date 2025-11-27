@@ -10,7 +10,7 @@ export default function AllFriday() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products");
+        const res = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/products");
         const products = Array.isArray(res.data) ? res.data : [];
         // تصفية المنتجات التي تحمل علامة fridayOffer
         setFridayOffers(products.filter(p => p.fridayOffer));
@@ -37,7 +37,7 @@ export default function AllFriday() {
             >
               {p.images?.[0] && (
                 <img
-                  src={`http://localhost:5000/uploads/${p.images[0]}`}
+                  src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${p.images[0]}`}
                   alt={p.name}
                   className="friday-product-image"
                 />
