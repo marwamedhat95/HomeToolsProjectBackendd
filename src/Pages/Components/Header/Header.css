@@ -1,0 +1,15 @@
+.space-x-reverse {
+    :where(& > :not(:last-child)) {
+        --tw-space-x-reverse: 0;
+    }
+}
+.heaartWish{
+    top: 8px;
+}
+.hover\:bg-gray-100 {
+    &:hover {
+        @media (hover: hover) {
+            background-color: transparent;
+        }
+    }
+}

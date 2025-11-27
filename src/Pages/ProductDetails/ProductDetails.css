@@ -1,0 +1,168 @@
+/* الألوان الأساسية: #C2A878, #f7f7f7, #fff */
+
+.product-details-page {
+    padding: 40px 20px;
+    background-color: #f7f7f7; /* خلفية فاتحة */
+    min-height: 100vh;
+    direction: rtl; 
+    font-family: Arial, sans-serif;
+}
+
+.details-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* ------------------- العنوان ------------------- */
+.details-title {
+    font-size: 32px;
+    font-weight: 800;
+    text-align: right;
+    margin-bottom: 30px;
+    color: #444;
+    border-right: 5px solid #C2A878; /* خط مميز على اليمين */
+    padding-right: 15px;
+}
+
+/* ------------------- تخطيط المحتوى ------------------- */
+.product-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* للسماح للالتفاف على الشاشات الصغيرة */
+    gap: 40px;
+}
+
+.product-gallery, .product-info-panel {
+    flex: 1 1 45%; /* لتقسيم المساحة بالتساوي تقريبًا */
+    min-width: 300px; /* ضمان عرض أدنى مقبول */
+}
+
+/* ------------------- معرض الصور (Slider) ------------------- */
+.main-image {
+    width: 100%;
+    height: 550px; /* ارتفاع ثابت للصورة الرئيسية */
+    object-fit: fill;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.thumb-slider {
+    margin-top: 10px;
+}
+
+.thumb-image {
+    width: 80px !important; /* حجم ثابت للصور المصغرة */
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    opacity: 0.7;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    margin: 0 5px; /* تباعد بين الصور */
+}
+
+/* تمييز الصورة المصغرة النشطة */
+.slick-slide.slick-current .thumb-image {
+    opacity: 1;
+    border-color: #C2A878; 
+}
+
+
+/* ------------------- لوحة المعلومات ------------------- */
+.product-name {
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.product-price {
+    font-size: 36px;
+    font-weight: 900;
+    color: #C2A878; /* السعر باللون المميز */
+    margin-bottom: 25px;
+}
+
+.product-meta p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 8px;
+    padding-right: 10px;
+    border-right: 3px solid #f0f0f0;
+}
+
+.meta-label {
+    font-weight: bold;
+    color: #444;
+}
+
+/* ------------------- الوصف ------------------- */
+.description-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed #eee;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.description-text {
+    color: #555;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+/* ------------------- زر الإضافة للسلة ------------------- */
+.add-to-cart-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 30px;
+    background-color: #C2A878;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(194, 168, 120, 0.4);
+}
+
+.add-to-cart-btn:hover {
+    background-color: #a5916f;
+    transform: translateY(-2px);
+}
+
+/* ------------------- استجابة الشاشة الصغيرة (Responsive) ------------------- */
+@media (max-width: 900px) {
+    .product-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .product-gallery, .product-info-panel {
+        flex: 1 1 100%;
+    }
+
+    .main-image {
+        height: 300px;
+    }
+
+    .details-container {
+        padding: 20px;
+        margin: 0 10px;
+    }
+
+    .details-title {
+        font-size: 28px;
+    }
+}

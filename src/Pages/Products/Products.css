@@ -1,0 +1,164 @@
+/* الألوان الأساسية: */
+/* - #C2A878: اللون البيج/البني المميز */
+/* - #EFEFEF: خلفية فاتحة */
+/* - #FFFFFF: لون البطاقات */
+
+/* ------------------- التخطيط العام للصفحة ------------------- */
+.products-page {
+    padding: 30px 20px;
+    background-color: #f7f7f7; /* خلفية فاتحة جدًا */
+    min-height: 100vh;
+    direction: rtl; /* دعم اللغة العربية */
+    font-family: Arial, sans-serif; /* يفضل استخدام خط عربي أنيق لو متوفر */
+}
+
+.products-title {
+    font-size: 36px;
+    font-weight: 800;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #C2A878; /* خط تحت العنوان بلون الماركة */
+    display: inline-block;
+    width: auto;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.products-container {
+    display: flex;
+    gap: 30px; /* مسافة بين الشريط الجانبي والمنتجات */
+    /* max-width: 1300px; */
+    margin: 0 auto;
+}
+
+/* ------------------- الشريط الجانبي (Filters) ------------------- */
+.products-filter {
+    width: 280px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    height: fit-content; /* يجعله يتوقف عند انتهاء محتواه */
+    position: sticky;
+    top: 30px; /* يجعله ثابتًا عند التمرير */
+}
+
+.input, .select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #555;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+    box-sizing: border-box; /* لضمان أن العرض 100% يشمل الحشو والحدود */
+}
+
+.input:focus, .select:focus {
+    border-color: #C2A878;
+    box-shadow: 0 0 0 3px rgba(194, 168, 120, 0.2);
+}
+
+/* ------------------- شبكة المنتجات (Product Grid) ------------------- */
+.products-grid {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+/* ------------------- بطاقة المنتج (Product Card) ------------------- */
+.product-card {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+    border: 2px solid transparent; /* حد شفاف للحالة العادية */
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border-color: #C2A878; /* الحد المميز عند التحويم */
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px; /* ارتفاع ثابت للصور */
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid #eee;
+}
+
+.product-cardtext {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.text_body {
+    margin-top: auto; /* يدفع العناصر التالية للأسفل */
+    margin-bottom: 10px;
+}
+
+.product-price, .product-quantity {
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.product-price span, .product-quantity span {
+    font-weight: bold;
+    color: #C2A878; /* تمييز العناوين */
+}
+
+.product-btn {
+    background-color: #C2A878;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.product-btn:hover {
+    background-color: #a5916f; /* لون أغمق عند التحويم */
+}
+
+
+/* ------------------- استجابة الشاشة الصغيرة (Responsive) ------------------- */
+@media (max-width: 900px) {
+    .products-container {
+        flex-direction: column; /* تحويل التخطيط إلى عمود واحد */
+    }
+
+    .products-filter {
+        width: 100%; /* عرض كامل للشريط الجانبي */
+        position: static; /* إزالة الثبات */
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* زيادة عدد المنتجات في الصف */
+    }
+}

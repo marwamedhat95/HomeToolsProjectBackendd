@@ -1,0 +1,126 @@
+/* الألوان الأساسية: #C2A878, #f7f7f7, #fff */
+
+.wishlist-page {
+    padding: 40px 20px;
+    background-color: #f7f7f7;
+    min-height: 100vh;
+    direction: rtl;
+    font-family: Arial, sans-serif;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ------------------- العنوان ------------------- */
+.wishlist-title {
+    font-size: 34px;
+    font-weight: 800;
+    text-align: center;
+    color: #333;
+    margin-bottom: 40px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #C2A878;
+    display: inline-block;
+    width: auto;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* ------------------- رسالة عدم وجود منتجات ------------------- */
+.no-items-message {
+    text-align: center;
+    padding: 50px;
+    border: 1px dashed #C2A878;
+    border-radius: 10px;
+    background-color: #fff;
+    margin: 50px auto;
+    max-width: 600px;
+}
+
+.no-items-message p {
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.shop-now-button {
+    background-color: #C2A878;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.shop-now-button:hover {
+    background-color: #a5916f;
+    transform: translateY(-2px);
+}
+
+/* ------------------- شبكة المفضلة ------------------- */
+.wishlist-grid {
+    display: grid;
+    /* تخطيط مرن لعمودين على الشاشات الصغيرة وثلاثة على المتوسطة */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+/* ------------------- بطاقة المنتج في المفضلة ------------------- */
+.wishlist-card {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+    border: 2px solid transparent; 
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.wishlist-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border-color: #C2A878;
+}
+
+.wishlist-image {
+    width: 100%;
+    height: 250px; /* ارتفاع ثابت لعرض صور المنتجات */
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid #eee;
+}
+
+.wishlist-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.wishlist-item-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+.wishlist-item-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #C2A878; /* إبراز السعر بلون الماركة */
+}
+
+
+/* ------------------- استجابة الشاشة الصغيرة (Responsive) ------------------- */
+@media (max-width: 600px) {
+    .wishlist-grid {
+        grid-template-columns: 1fr; /* عمود واحد على الهواتف */
+    }
+
+    .wishlist-page {
+        padding: 20px 10px;
+    }
+}

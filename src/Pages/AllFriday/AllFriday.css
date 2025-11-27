@@ -1,0 +1,126 @@
+/* الألوان الأساسية: #C2A878, #f7f7f7, #fff */
+
+.all-friday-page {
+    padding: 40px 20px;
+    background-color: #f7f7f7;
+    min-height: 100vh;
+    direction: rtl;
+    font-family: Arial, sans-serif;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ------------------- العنوان ------------------- */
+.friday-offers-title {
+    font-size: 34px;
+    font-weight: 800;
+    text-align: center;
+    color: #333;
+    margin-bottom: 40px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #C2A878;
+    display: inline-block;
+    width: auto;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* ------------------- شبكة المنتجات ------------------- */
+.friday-products-grid {
+    display: grid;
+    /* تخطيط مرن يتكيف مع الشاشة لعرض 2 إلى 4 أعمدة */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+/* ------------------- بطاقة المنتج (Card) ------------------- */
+.friday-product-card {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+    border: 2px solid transparent; 
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+/* يمكن إضافة تنسيق مميز للعروض هنا */
+.friday-product-card {
+    border-color: #C2A878; /* إطار خفيف بلون الماركة لتمييز العروض */
+    box-shadow: 0 4px 15px rgba(194, 168, 120, 0.3);
+}
+
+.friday-product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border-color: #C2A878;
+}
+
+.friday-product-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid #eee;
+}
+
+.friday-product-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.friday-product-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.friday-product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #C2A878;
+    margin-bottom: 8px;
+}
+
+.friday-product-price span {
+    font-weight: normal;
+    color: #666;
+    margin-left: 5px;
+}
+
+.friday-product-meta {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+.friday-product-meta span {
+    font-weight: bold;
+    color: #555;
+    margin-left: 5px;
+}
+
+.no-offers-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 24px;
+    color: #888;
+    padding: 50px;
+}
+
+
+/* ------------------- استجابة الشاشة الصغيرة (Responsive) ------------------- */
+@media (max-width: 600px) {
+    .friday-products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .all-friday-page {
+        padding: 20px 10px;
+    }
+}

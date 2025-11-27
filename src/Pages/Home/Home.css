@@ -1,0 +1,59 @@
+/* تنسيقات عامة لتنظيف الخلفية */
+body {
+    background-color: #F8F8F8; /* خلفية نظيفة */
+}
+
+/* 1. تخصيص نقاط التمرير (Dots) */
+.slick-dots {
+    bottom: -30px !important; /* مسافة من أسفل المنتج */
+}
+
+.slick-dots li button:before {
+    font-size: 10px;
+    color: #C2A878; /* لون النقطة غير النشطة */
+    opacity: 0.5;
+}
+
+.slick-dots li.slick-active button:before {
+    color: #C2A878; /* لون النقطة النشطة (اللون المميز) */
+    opacity: 1;
+}
+
+/* 2. تخصيص أسهم التنقل (Arrows) - ليتناسب مع التصميم العربي */
+.slick-prev:before,
+.slick-next:before {
+    font-size: 30px;
+    color: #333333; /* لون السهم */
+    opacity: 0.75;
+}
+
+/* تعديل موقع الأسهم ليتناسب مع اتجاه RTL */
+.slick-prev {
+    left: -25px; /* السهم الأيسر (السابق) */
+}
+
+.slick-next {
+    right: -25px; /* السهم الأيمن (التالي) */
+}
+
+/* 3. تنسيق بطاقة المنتج داخل الـ Slider */
+.product-card {
+    border: 1px solid #E0E0E0; /* حدود خفيفة */
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.75rem; /* rounded-xl */
+    transition: all 0.3s ease-in-out;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* ظل خفيف عند المرور */
+    border-color: #C2A878; /* إبراز باللون المميز */
+}
+.btn-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.text-4xl.font-bold.mb-4{
+    color: #fff;
+}

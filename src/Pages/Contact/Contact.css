@@ -1,0 +1,159 @@
+/* الألوان الأساسية: #C2A878, #f7f7f7, #fff */
+
+.contact-page {
+    padding: 40px 20px;
+    background-color: #f7f7f7;
+    min-height: 100vh;
+    direction: rtl;
+    font-family: Arial, sans-serif;
+}
+
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ------------------- العنوان ------------------- */
+.contact-title {
+    font-size: 34px;
+    font-weight: 800;
+    text-align: center;
+    color: #333;
+    margin-bottom: 40px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #C2A878;
+    display: inline-block;
+    width: auto;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* ------------------- الحاوية التي تجعل البطاقات جنبًا إلى جنب ------------------- */
+.contacts-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* للسماح بالالتفاف على شاشات الهواتف */
+    gap: 30px; /* مسافة بين البطاقات */
+    justify-content: center; /* توسيط البطاقات إذا كان عددها فردي */
+}
+
+/* ------------------- بطاقة الاتصال الواحدة (Kard Kamla) ------------------- */
+.contact-card {
+    /* كل بطاقة تأخذ مساحة مرنة، بحد أدنى 350px */
+    flex: 1 1 350px; 
+    
+    padding: 25px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background-color: #fcfcfc;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    
+    /* لجعل المحتويات داخل البطاقة رأسية */
+    display: flex;
+    flex-direction: column;
+}
+
+.card-content-vertical {
+    /* حاوية المحتوى داخل البطاقة (العنوان، الهاتف، السوشيال) */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ------------------- عناصر الاتصال الفردية ------------------- */
+.contact-item {
+    padding: 10px 0;
+    /* فصل بسيط بين العناصر داخل البطاقة */
+    border-bottom: 1px solid #eee;
+}
+
+.contact-item:last-of-type {
+    border-bottom: none;
+}
+
+.item-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.item-icon {
+    color: #C2A878;
+    margin-left: 8px;
+    font-size: 18px;
+}
+
+.item-value {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* ------------------- وسائل التواصل الاجتماعي ------------------- */
+.social-links {
+    padding-top: 10px;
+}
+
+.social-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* تنسيق الروابط داخل قسم السوشيال */
+.social-link {
+    display: flex; 
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px 12px;
+    margin-bottom: 8px; /* مسافة بين الروابط */
+    border-radius: 6px;
+    text-decoration: none;
+    transition: transform 0.2s, opacity 0.2s;
+    width: 100%; /* عرض كامل للرابط */
+}
+
+.social-link svg {
+    margin-left: 8px;
+    font-size: 16px;
+}
+
+.social-link:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* ألوان أيقونات السوشيال ميديا */
+.facebook {
+    background-color: #3b5998;
+    color: white;
+}
+.twitter {
+    background-color: #1da1f2;
+    color: white;
+}
+.instagram {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: white;
+}
+
+/* ------------------- استجابة الشاشة الصغيرة (Responsive) ------------------- */
+@media (max-width: 768px) {
+    .contacts-wrapper {
+        gap: 20px;
+    }
+    
+    .contact-card {
+        flex: 1 1 100%; /* عرض كامل على الشاشات الصغيرة */
+    }
+}

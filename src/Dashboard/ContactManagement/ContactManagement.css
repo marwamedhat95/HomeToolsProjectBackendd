@@ -1,0 +1,110 @@
+/* ContactManagement.css */
+
+/* Base Inputs */
+.input {
+padding: 0.5rem 0.75rem;
+border: 1px solid #d1d5db;
+border-radius: 0.5rem;
+outline: none;
+transition: all 0.2s;
+}
+.input:focus {
+border-color: #c2a878;
+box-shadow: 0 0 0 2px rgba(194, 168, 120, 0.3);
+}
+
+/* Buttons */
+.btn {
+padding: 1rem 1.5rem !important;
+border: none;
+border-radius: 0.5rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s;
+}
+
+/* Primary Button - Gold Warm */
+.btn-primary {
+background-color: #c2a878;
+color: white;
+}
+.btn-primary:hover {
+background-color: #a5916f;
+}
+
+/* Small Buttons */
+.btn-sm {
+padding: 0.25rem 0.5rem;
+font-size: 0.85rem;
+}
+
+/* Warning / Edit */
+.btn-warning {
+background-color: #facc15; /* أصفار ذهبية فاتحة */
+color: white;
+}
+.btn-warning:hover {
+background-color: #d4af37;
+}
+
+/* Error / Delete */
+.btn-error {
+background-color: #ef4444 !important;
+color: white;
+}
+.btn-error:hover {
+background-color: #b91c1c !important;
+}
+
+/* Form Card */
+.p-4.border {
+background-color: #fbfbfb;
+border-color: #c2a77b;
+}
+
+/* Saved Contacts Card */
+.saved-contact-card {
+background-color: #fffaf5;
+border-radius: 0.5rem;
+padding: 1rem;
+margin-bottom: 0.5rem;
+}
+
+/* Popup Styling */
+.fixed.inset-0 {
+backdrop-filter: blur(2px);
+}
+
+.fixed > div.bg-white {
+border-radius: 0.75rem;
+box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+padding: 1.5rem;
+}
+
+/* Close Button */
+.fixed button.absolute {
+background: transparent;
+border: none;
+font-size: 1.2rem;
+cursor: pointer;
+}
+
+/* Typography */
+h1, h2, h3 {
+color: #3f3f46;
+}
+
+/* Layout */
+.space-y-6 > * + * {
+margin-top: 1.5rem;
+}
+.flex.gap-3 > * + * {
+margin-left: 0.75rem;
+}
+
+/* Scrollable if many saved contacts */
+.saved-contacts-container {
+max-height: 500px;
+overflow-y: auto;
+padding-right: 0.25rem;
+}

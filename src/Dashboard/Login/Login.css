@@ -1,0 +1,95 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+/* الصفحة كاملة fullscreen */
+.login-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8cdd7, #ffd6c3); /* Rose Gold gradient */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* الأدوات الصغيرة المتساقطة */
+.falling-tool {
+  position: absolute;
+  top: -50px;
+    background: url('../../assets/img/home-tools.png.png') no-repeat center center/cover;
+  pointer-events: none;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* الفورم */
+.login-form {
+  position: relative;
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 50px 65px 65px 40px ;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  width: 350px;
+  text-align: center;
+  animation: slideFade 1s ease;
+  transform-style: preserve-3d;
+}
+
+/* Animation للفورم */
+@keyframes slideFade {
+  0% { transform: translateY(-50px) rotateX(15deg); opacity: 0; }
+  100% { transform: translateY(0) rotateX(0deg); opacity: 1; }
+}
+
+.login-form h2 {
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #b565a7; /* Rose Gold accent */
+}
+
+/* الحقول */
+.login-form input {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.login-form input:focus {
+  border-color: #b565a7;
+  box-shadow: 0 0 8px rgba(181,101,167,0.5);
+  outline: none;
+}
+
+/* زر الدخول */
+.login-form button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  background: linear-gradient(135deg, #b565a7, #ffb6c1);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-form button:hover {
+  transform: scale(1.05) translateY(-3px);
+  box-shadow: 0 8px 20px rgba(181,101,167,0.5);
+}
