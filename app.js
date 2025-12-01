@@ -17,7 +17,7 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
-app.use('/api', uploadRoute);
+
 // Routes
 const uploadRoute = require('./routes/upload');
 const productsRoute = require('./routes/products');
@@ -34,6 +34,7 @@ app.use('/api/categories', categoriesRoute);
 app.use('/api/videos', videosRoute);
 app.use("/api/contacts", contactRouter);
 app.use("/api/hero", heroRouter);
+app.use('/api', uploadRoute);
 // app.use("/api/homeProducts", homeProductsRouter);
 // app.use('/api/contact', contactRoute);
 
