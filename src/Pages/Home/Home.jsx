@@ -40,8 +40,8 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const prodRes = await axios.get("https://localhost:5000/api/products");
-        const catRes = await axios.get("https://localhost:5000/api/categories");
+        const prodRes = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/products");
+        const catRes = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/categories");
 
         setHomeProducts(prodRes.data.filter(p => p.homeProduct));
         setFridayOffers(prodRes.data.filter(p => p.fridayOffer));
@@ -154,7 +154,7 @@ export default function Home() {
                 onClick={() => navigate(`/product/${p._id}`)}
               >
                 <img
-                  src={`https://localhost:5000/uploads/${p.images?.[0]}`}
+                  src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${p.images?.[0]}`}
                   alt={p.name}
                   className="w-full h-48 object-cover rounded-lg mb-3"
                 />
@@ -204,7 +204,7 @@ export default function Home() {
                   خصم!
                 </span>
                 <img
-                  src={`https://localhost:5000/uploads/${p.images?.[0]}`}
+                  src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${p.images?.[0]}`}
                   alt={p.name}
                   className="w-full h-48 object-cover rounded-lg mb-3"
                 />
