@@ -40,8 +40,8 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const prodRes = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/products");
-        const catRes = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/categories");
+        const prodRes = await axios.get("https://localhost:5000/api/products");
+        const catRes = await axios.get("https://localhost:5000/api/categories");
 
         setHomeProducts(prodRes.data.filter(p => p.homeProduct));
         setFridayOffers(prodRes.data.filter(p => p.fridayOffer));
@@ -154,7 +154,7 @@ export default function Home() {
                 onClick={() => navigate(`/product/${p._id}`)}
               >
                 <img
-                  src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${p.images?.[0]}`}
+                  src={`https://localhost:5000/uploads/${p.images?.[0]}`}
                   alt={p.name}
                   className="w-full h-48 object-cover rounded-lg mb-3"
                 />
@@ -164,7 +164,7 @@ export default function Home() {
                   <p className="text-xl font-extrabold text-[#C2A878]">{p.price} جنيه</p>
                   {/* أيقونة سلة */}
                   <button className="bg-[#C2A878] text-white p-2 rounded-full hover:bg-[#a5916f] transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M3 1a1 1 0 000 2h1a2 2 0 012 2v2a2 2 0 01-2 2H3a1 1 0 000 2h12a1 1 0 000-2h-1a2 2 0 01-2-2V5a2 2 0 012-2h1a1 1 0 100-2H3zM5 13a1 1 0 100 2h10a1 1 0 100-2H5z" /></svg>
+                    <svg xmlns="https://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M3 1a1 1 0 000 2h1a2 2 0 012 2v2a2 2 0 01-2 2H3a1 1 0 000 2h12a1 1 0 000-2h-1a2 2 0 01-2-2V5a2 2 0 012-2h1a1 1 0 100-2H3zM5 13a1 1 0 100 2h10a1 1 0 100-2H5z" /></svg>
                   </button>
                 </div>
                 <p className="text-sm text-gray-500 mt-1">الكمية: {p.quantity}</p>
@@ -204,7 +204,7 @@ export default function Home() {
                   خصم!
                 </span>
                 <img
-                  src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${p.images?.[0]}`}
+                  src={`https://localhost:5000/uploads/${p.images?.[0]}`}
                   alt={p.name}
                   className="w-full h-48 object-cover rounded-lg mb-3"
                 />
