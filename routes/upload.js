@@ -1,29 +1,24 @@
 import express from 'express';
 import multer from 'multer';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import cloudinary from '../config/cloudinary.js';
+import streamifier from 'streamifier';
 
 const router = express.Router();
+const upload = multer({ storage: multer.memoryStorage() });
 
-// إعداد التخزين على Cloudinary
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'products', // المجلد على Cloudinary
-    allowed_formats: ['jpg', 'png', 'jpeg'],
-  },
-});
+router.post('/upload', upload.single('image'), (req, res) => {
+  const file = req.file;
+  if (!file) return res.status(400).json({ error: "No file uploaded" });
 
-const parser = multer({ storage: storage });
+  const stream = cloudinary.uploader.upload_stream(
+    { folder: 'products' },
+    (error, result) => {
+      if (error) return res.status(500).json({ error });
+      res.json({ url: result.secure_url });
+    }
+  );
 
-// Route رفع صورة
-router.post('/upload', parser.single('image'), async (req, res) => {
-  try {
-    const imageUrl = req.file.path; // الرابط النهائي للصورة على Cloudinary
-    res.json({ url: imageUrl });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  streamifier.createReadStream(file.buffer).pipe(stream);
 });
 
 export default router;
