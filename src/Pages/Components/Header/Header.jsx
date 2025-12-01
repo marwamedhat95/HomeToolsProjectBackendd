@@ -31,7 +31,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-20">
 
           {/* Logo */}
-          <Link to="/" className="text-3xl font-extrabold  logo" style={{ color: primaryColor }}>
+          <Link to="/" className="text-3xl font-extrabold logo" style={{ color: primaryColor }}>
             جاليري بيت الفريدة
           </Link>
 
@@ -50,7 +50,7 @@ export default function Header() {
             <div className="relative">
               <Link
                 to="/wishlist"
-                className="p-2 rounded-full transition heart"
+                className="p-2 rounded-full transition  heart"
                 style={{ color: primaryColor }}
               >
                 <FaHeart />
