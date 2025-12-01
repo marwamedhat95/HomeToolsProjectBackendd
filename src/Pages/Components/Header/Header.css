@@ -6,6 +6,12 @@
 .heaartWish{
     top: 8px;
 }
+.heart{
+    color: #1a2a44;
+}
+.logo{
+    color: #1a2a44;
+}
 .hover\:bg-gray-100 {
     &:hover {
         @media (hover: hover) {

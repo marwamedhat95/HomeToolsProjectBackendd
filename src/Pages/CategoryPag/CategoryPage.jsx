@@ -31,7 +31,7 @@ useEffect(() => {
   if (id) fetchData();
 }, [id]);
 
-if (loading) return <p className="text-center mt-20">Loading...</p>;
+if (loading) return <p className="text-center mt-20 loadingScreen">Loading...</p>;
 
 return ( <div className="container mx-auto px-4 py-8"> <h2 className="text-2xl font-semibold mb-6">قسم: {categoryName}</h2> <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 {products.map(p => (
