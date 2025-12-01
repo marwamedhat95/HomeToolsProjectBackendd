@@ -1,3 +1,4 @@
+import uploadRoute from './routes/upload.js';
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -15,6 +16,8 @@ app.use(cors({
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+
+app.use('/api', uploadRoute);
 // Routes
 const productsRoute = require('./routes/products');
 const categoriesRoute = require('./routes/categories');
