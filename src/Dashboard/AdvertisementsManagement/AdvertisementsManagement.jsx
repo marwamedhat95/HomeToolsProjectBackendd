@@ -86,7 +86,7 @@ export default function AdvertisementsManagement() {
         {ads.map(ad => (
           <div key={ad._id} className="border p-3 rounded shadow relative">
             <img
-              src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${ad.image}`}
+              src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/${ad.image}`}
               alt="ad"
               className="w-full h-40 object-cover rounded mb-2"
             />

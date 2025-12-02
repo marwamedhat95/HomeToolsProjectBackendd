@@ -78,7 +78,7 @@ export default function VideosPage() {
                 <div className="video-thumbnail-container">
                   {v.type === "file" && (
                     <video
-                      src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/videos/${v.filename}`}
+                      src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/videos/${v.filename}`}
                       className="video-thumbnail"
                     />
                   )}
@@ -112,7 +112,7 @@ export default function VideosPage() {
 
               {selectedVideo.type === "file" && (
                 <video
-                  src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/videos/${selectedVideo.filename}`}
+                  src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/videos/${selectedVideo.filename}`}
                   controls
                   autoPlay
                   className="modal-video-player"

@@ -181,7 +181,7 @@ export default function ProductsManagement() {
         {/* Images */}
       <div className="flex gap-2 overflow-x-auto mb-2">
         {p.images?.map((img, idx) => (
-          <img key={idx} src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`} className="w-24 h-24 rounded-md" />
+          <img key={idx} src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/${img}`} className="w-24 h-24 rounded-md" />
         ))}
       </div>
 

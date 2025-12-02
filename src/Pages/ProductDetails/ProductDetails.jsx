@@ -70,7 +70,7 @@ return (
                         {product.images.map((img, idx) => (
                             <img
                                 key={idx}
-                                src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
+                                src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/${img}`}
                                 alt={product.name}
                                 className="main-image"
                             />
@@ -81,7 +81,7 @@ return (
                         {product.images.map((img, idx) => (
                             <img
                                 key={idx}
-                                src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
+                                src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/${img}`}
                                 alt={product.name}
                                 className="thumb-image"
                             />

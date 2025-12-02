@@ -25,7 +25,7 @@ export default function Advertisements() {
           id={`ad-${ad._id}`}                            // ← unique id
         >
           <img
-            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${ad.image}`}
+            src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/${ad.image}`}
             alt="إعلان"
             className={`w-full rounded-lg shadow-lg cursor-pointer hover:opacity-90 transition mb-4 ad-img ad-img-${index}`}
           />
