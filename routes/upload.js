@@ -1,24 +1,35 @@
 const express = require('express');
 const multer = require('multer');
-const cloudinary = require('../config/cloudinary'); // بدون .js
+const cloudinary = require('../config/cloudinary');
 const streamifier = require('streamifier');
 
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.post('/upload', upload.single('image'), (req, res) => {
-  const file = req.file;
-  if (!file) return res.status(400).json({ error: "No file uploaded" });
+console.log("---- Upload Route Hit ----");
+console.log("req.file:", req.file);
+console.log("req.body:", req.body);
 
-  const stream = cloudinary.uploader.upload_stream(
-    { folder: 'products' },
-    (error, result) => {
-      if (error) return res.status(500).json({ error });
-      res.json({ url: result.secure_url });
-    }
-  );
+const file = req.file;
+if (!file) {
+console.log("No file uploaded!");
+return res.status(400).json({ error: "No file uploaded" });
+}
 
-  streamifier.createReadStream(file.buffer).pipe(stream);
+const stream = cloudinary.uploader.upload_stream(
+{ folder: 'products' },
+(error, result) => {
+if (error) {
+console.log("Cloudinary Error:", error);
+return res.status(500).json({ error });
+}
+console.log("Cloudinary Result:", result);
+res.json({ url: result.secure_url });
+}
+);
+
+streamifier.createReadStream(file.buffer).pipe(stream);
 });
 
 module.exports = router;
