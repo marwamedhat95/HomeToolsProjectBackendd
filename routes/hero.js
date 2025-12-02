@@ -1,15 +1,12 @@
-// routes/hero.js
 const express = require("express");
 const router = express.Router();
 const Hero = require("../models/Hero");
 const multer = require("multer");
+const cloudinary = require("../config/cloudinary");
+const streamifier = require("streamifier");
 
-// إعداد multer لتخزين الصور
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/"),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
-});
-const upload = multer({ storage });
+// استخدام memoryStorage بدل التخزين على القرص
+const upload = multer({ storage: multer.memoryStorage() });
 
 // GET الهيرو
 router.get("/", async (req, res) => {
@@ -21,11 +18,27 @@ router.get("/", async (req, res) => {
   }
 });
 
-// PUT لتحديث الهيرو
+// PUT لتحديث الهيرو مع Cloudinary
 router.put("/", upload.single("background"), async (req, res) => {
   try {
     const { title, description, buttonText, buttonLink } = req.body;
-    const background = req.file ? req.file.filename : null;
+    let backgroundUrl = null;
+
+    if (req.file) {
+      // رفع الصورة على Cloudinary
+      const result = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: "hero" },
+          (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+          }
+        );
+        streamifier.createReadStream(req.file.buffer).pipe(stream);
+      });
+
+      backgroundUrl = result.secure_url; // اللينك النهائي للصورة
+    }
 
     let hero = await Hero.findOne();
     if (!hero) {
@@ -34,19 +47,20 @@ router.put("/", upload.single("background"), async (req, res) => {
         description,
         buttonText,
         buttonLink,
-        background,
+        background: backgroundUrl,
       });
     } else {
       hero.title = title;
       hero.description = description;
       hero.buttonText = buttonText;
       hero.buttonLink = buttonLink;
-      if (background) hero.background = background;
+      if (backgroundUrl) hero.background = backgroundUrl; // استبدال اللينك القديم
     }
 
     await hero.save();
     res.json(hero);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "حدث خطأ أثناء تحديث الهيرو" });
   }
 });
