@@ -22,10 +22,9 @@ router.get("/", async (req, res) => {
 });
 
 // PUT لتحديث الهيرو
-router.put("/", upload.single("background"), async (req, res) => {
+router.put("/", async (req, res) => {
   try {
-    const { title, description, buttonText, buttonLink } = req.body;
-    const background = req.file ? req.file.filename : null;
+    const { title, description, buttonText, buttonLink, background } = req.body;
 
     let hero = await Hero.findOne();
     if (!hero) {
@@ -34,14 +33,14 @@ router.put("/", upload.single("background"), async (req, res) => {
         description,
         buttonText,
         buttonLink,
-        background,
+        background, // URL مباشر
       });
     } else {
       hero.title = title;
       hero.description = description;
       hero.buttonText = buttonText;
       hero.buttonLink = buttonLink;
-      if (background) hero.background = background;
+      if (background) hero.background = background; // تحديث URL لو موجود
     }
 
     await hero.save();
@@ -50,5 +49,6 @@ router.put("/", upload.single("background"), async (req, res) => {
     res.status(500).json({ error: "حدث خطأ أثناء تحديث الهيرو" });
   }
 });
+
 
 module.exports = router;
