@@ -154,7 +154,7 @@ export default function Home() {
                 onClick={() => navigate(`/product/${p._id}`)}
               >
                 <img
-                  src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/${p.images?.[0]}`}
+                  src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${p.images?.[0]}`}
                   alt={p.name}
                   className="w-full h-48 object-cover rounded-lg mb-3"
                 />
@@ -204,7 +204,7 @@ export default function Home() {
                   خصم!
                 </span>
                 <img
-                  src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/${p.images?.[0]}`}
+                  src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${p.images?.[0]}`}
                   alt={p.name}
                   className="w-full h-48 object-cover rounded-lg mb-3"
                 />

@@ -34,7 +34,7 @@ export default function AllNew() {
           >
             {p.images?.[0] && (
               <img
-                src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/${p.images[0]}`}
+                src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${p.images[0]}`}
                 alt={p.name}
                 className="product-image-new"
               />

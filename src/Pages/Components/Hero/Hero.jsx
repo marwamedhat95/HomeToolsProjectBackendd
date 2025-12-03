@@ -28,7 +28,7 @@ const fetchHero = async () => {
       buttonText: data.buttonText || "",
       buttonLink: data.buttonLink || "#",
       background: data.background
-        ? `https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/${encodeURIComponent(data.background)}`
+        ? `https://hometoolsprojectbackendd-production.up.railway.app/uploads/${encodeURIComponent(data.background)}`
         : "",
     });
   } catch (err) {

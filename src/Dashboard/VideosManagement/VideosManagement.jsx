@@ -131,7 +131,7 @@ export default function VideosManagement() {
               <p className="text-sm mb-1">القسم: {translateCategory(v.category)}</p>
 
               {v.type === "file" && (
-                <video src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/videos/${v.filename}`} className="w-full h-32" />
+                <video src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/videos/${v.filename}`} className="w-full h-32" />
               )}
 
               {v.type === "youtube" && (
@@ -204,7 +204,7 @@ export default function VideosManagement() {
             <button className="close" onClick={() => setPreviewPopup(null)}>✖</button>
             <h3 className="font-bold mb-2">{previewPopup.title}</h3>
             {previewPopup.type === "file" && (
-              <video src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/videos/${previewPopup.filename}`} controls autoPlay className="w-full" />
+              <video src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/videos/${previewPopup.filename}`} controls autoPlay className="w-full" />
             )}
             {previewPopup.type === "youtube" && (
               <iframe width="100%" height="400" src={`https://www.youtube.com/embed/${extractYouTubeId(previewPopup.url)}`} title={previewPopup.title} frameBorder="0" allowFullScreen></iframe>

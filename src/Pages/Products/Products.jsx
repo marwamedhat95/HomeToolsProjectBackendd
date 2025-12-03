@@ -50,7 +50,7 @@ export default function Products() {
         <div className="products-grid">
             {filteredProducts.map(p => (
                 <div key={p._id} className="product-card">
-                    {p.images?.[0] && <img src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/${p.images[0]}`} alt={p.name} />}
+                    {p.images?.[0] && <img src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${p.images[0]}`} alt={p.name} />}
                     <div className="product-cardtext">
                     <h3 className="product-name">{p.name}</h3>
                    <div className="text_body">

@@ -245,7 +245,7 @@ export default function DashboardHome() {
           <label className="image-label">صورة الخلفية الحالية:</label>
           {hero.currentBackground && (
             <img 
-              src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/${hero.currentBackground}`} 
+              src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${hero.currentBackground}`} 
               className="hero-current-image" 
               alt="Current Hero Background"
             />
@@ -520,7 +520,7 @@ export default function DashboardHome() {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/${img}`}
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                             alt="product"
                             className="product-thumb"
                         />
@@ -643,7 +643,7 @@ export default function DashboardHome() {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={`https://hometoolsprojectbackendd-production.up.railway.app/api/uploads/${img}`}
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                             alt="product"
                             className="product-thumb"
                         />
