@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
 // PUT لتحديث الهيرو
 router.put("/", async (req, res) => {
   try {
-    const { title, description, buttonText, buttonLink, background } = req.body;
+    const { title, description, buttonText, buttonLink, background } = req.body; // background هنا هو رابط Cloudinary
 
     let hero = await Hero.findOne();
     if (!hero) {
@@ -33,19 +33,20 @@ router.put("/", async (req, res) => {
         description,
         buttonText,
         buttonLink,
-        background, // URL مباشر
+        background,
       });
     } else {
       hero.title = title;
       hero.description = description;
       hero.buttonText = buttonText;
       hero.buttonLink = buttonLink;
-      if (background) hero.background = background; // تحديث URL لو موجود
+      if (background) hero.background = background;
     }
 
     await hero.save();
     res.json(hero);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "حدث خطأ أثناء تحديث الهيرو" });
   }
 });
