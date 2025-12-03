@@ -197,6 +197,27 @@ export default function DashboardHome() {
   // ---------------- UPDATE PRODUCT (Helper function is removed, logic embedded) ----------------
   // تم إزالة دالة updateProduct، المنطق موجود مباشرة في زر الحفظ
 
+const uploadImage = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "react_upload"); // الاسم اللي عملتيه في Cloudinary
+
+  try {
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dkhjcwrlw/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    const data = await res.json();
+    console.log("Uploaded image URL:", data.secure_url);
+    return data.secure_url;
+  } catch (err) {
+    console.error("Upload error:", err);
+  }
+};
+
   return (
     <div className="dashboard-page">
       {/* ----------------- POPUP (Hero) ----------------- */}
@@ -252,10 +273,14 @@ export default function DashboardHome() {
           )}
 
           <input
-            type="file"
-            className="file-input"
-            onChange={(e) => setHero({ ...hero, background: e.target.files[0] })}
-          />
+  type="file"
+  className="file-input"
+  onChange={async (e) => {
+    const file = e.target.files[0];
+    const url = await uploadImage(file); // هترفع على Cloudinary
+    setHero({ ...hero, background: url }); // حفظ رابط الصورة في state
+  }}
+/>
 
           <button className="primary-button hero-save-button">حفظ التغييرات</button>
         </form>
