@@ -34,28 +34,38 @@ export default function DashboardHome() {
     }
   };
 
-  const handleSubmits = async (e) => {
-    e.preventDefault();
+const handleSubmits = async (e) => {
+  e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("title", hero.title);
-    formData.append("description", hero.description);
-    formData.append("buttonText", hero.buttonText);
-    formData.append("buttonLink", hero.buttonLink);
+  const formData = new FormData();
+  formData.append("title", hero.title);
+  formData.append("description", hero.description);
+  formData.append("buttonText", hero.buttonText);
+  formData.append("buttonLink", hero.buttonLink);
 
-    if (hero.background) {
-      formData.append("background", hero.background);
-    }
+  // رفع الصورة على Cloudinary
+ if (hero.background) {
+    const imageData = new FormData();
+    imageData.append("image", hero.background);
 
-    try {
-      await axios.put("https://hometoolsprojectbackendd-production.up.railway.app/api/hero", formData);
-      showPopups("تم تحديث الـ Hero بنجاح");
-      fetchHero();
-    } catch (err) {
-      console.error(err);
-      showPopups("حدث خطأ أثناء التحديث", "error");
-    }
-  };
+    const uploadRes = await fetch(
+      "https://hometoolsprojectbackendd-production.up.railway.app/upload",
+      { method: "POST", body: imageData }
+    );
+    const uploadData = await uploadRes.json(); // 🟢 هنا بعد الرفع
+
+    formData.append("background", uploadData.url); // 🟢 هنا بعد ما uploadData متعرف
+}
+  
+  try {
+    await axios.put("https://hometoolsprojectbackendd-production.up.railway.app/api/hero", formData);
+    showPopups("تم تحديث الـ Hero بنجاح");
+    fetchHero();
+  } catch (err) {
+    console.error(err);
+    showPopups("حدث خطأ أثناء التحديث", "error");
+  }
+};
 
   // ---------------- POPUP STATE ----------------
   const [popup, setPopup] = useState({ show: false, message: "", type: "" });
@@ -148,40 +158,50 @@ export default function DashboardHome() {
 
   // ---------------- ADD PRODUCT ----------------
   const handleSubmit = async (form, setForm) => {
-    if (!validateForm(form)) return;
+  if (!validateForm(form)) return;
 
-    try {
-      const formData = new FormData();
-      formData.append("name", form.name);
-      formData.append("price", form.price);
-      formData.append("quantity", form.quantity);
-      formData.append("color", form.color);
-      formData.append("description", form.description);
-      formData.append("homeProduct", form.homeProduct);
-      formData.append("fridayOffer", form.fridayOffer);
+  try {
+    // رفع الصور على Cloudinary أولًا
+    const uploadedImages = [];
+    for (let i = 0; i < files.length; i++) {
+      const imageData = new FormData();
+      imageData.append("image", files[i]);
 
-      files.forEach((file) => formData.append("images", file));
-
-      await axios.post("https://hometoolsprojectbackendd-production.up.railway.app/api/products", formData);
-
-      showPopup("تمت إضافة المنتج بنجاح 🎉", "success");
-
-      setForm({
-        ...form,
-        name: "",
-        price: "",
-        quantity: "",
-        color: "",
-        description: "",
-      });
-
-      setFiles([]);
-      fetchProducts();
-    } catch (err) {
-      showPopup("حدث خطأ أثناء الإضافة", "error");
-      console.error(err);
+      const uploadRes = await fetch(
+        "https://hometoolsprojectbackendd-production.up.railway.app/upload",
+        { method: "POST", body: imageData }
+      );
+      const uploadData = await uploadRes.json();
+      uploadedImages.push(uploadData.url);
     }
-  };
+    // جهزي FormData للمنتج مع روابط الصور
+    const formData = new FormData();
+    formData.append("name", form.name);
+    formData.append("price", form.price);
+    formData.append("quantity", form.quantity);
+    formData.append("color", form.color);
+    formData.append("description", form.description);
+    formData.append("homeProduct", form.homeProduct);
+    formData.append("fridayOffer", form.fridayOffer);
+
+    // ضيفي روابط الصور كـ JSON string لو الـ backend متوقع array من URLs
+    formData.append("images", JSON.stringify(uploadedImages));
+
+    await axios.post(
+      "https://hometoolsprojectbackendd-production.up.railway.app/api/products",
+      formData
+    );
+
+    showPopup("تمت إضافة المنتج بنجاح 🎉", "success");
+    setForm({ ...form, name: "", price: "", quantity: "", color: "", description: "" });
+    setFiles([]);
+    fetchProducts();
+  } catch (err) {
+    showPopup("حدث خطأ أثناء الإضافة", "error");
+    console.error(err);
+  }
+};
+
 
   // ---------------- DELETE PRODUCT ----------------
   const deleteProduct = async (id) => {
@@ -245,7 +265,7 @@ export default function DashboardHome() {
           <label className="image-label">صورة الخلفية الحالية:</label>
           {hero.currentBackground && (
             <img 
-              src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${hero.currentBackground}`} 
+              src={hero.currentBackground}
               className="hero-current-image" 
               alt="Current Hero Background"
             />
@@ -520,7 +540,7 @@ export default function DashboardHome() {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
+                            src={img}
                             alt="product"
                             className="product-thumb"
                         />
@@ -643,7 +663,7 @@ export default function DashboardHome() {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
+                            src={img}
                             alt="product"
                             className="product-thumb"
                         />
