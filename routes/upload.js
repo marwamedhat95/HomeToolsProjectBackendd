@@ -1,24 +1,31 @@
-const express = require('express');
-const multer = require('multer');
-const cloudinary = require('../config/cloudinary');
-const streamifier = require('streamifier');
-
+// routes/upload.js
+const express = require("express");
 const router = express.Router();
-const upload = multer({ storage: multer.memoryStorage() });
+const multer = require("multer");
+const cloudinary = require("../config/cloudinary");
+const { Readable } = require("stream");
 
-router.post('/upload', upload.single('image'), (req, res) => {
+const storage = multer.memoryStorage(); // هنرفع الصورة كـ buffer
+const upload = multer({ storage });
+
+router.post("/", upload.single("image"), async (req, res) => {
+  try {
     const file = req.file;
-    if (!file) return res.status(400).json({ error: "No file uploaded" });
-
     const stream = cloudinary.uploader.upload_stream(
-        { folder: 'products' },
-        (error, result) => {
-            if (error) return res.status(500).json({ error });
-            res.json({ url: result.secure_url });
-        }
+      { folder: "hometools" },
+      (error, result) => {
+        if (error) return res.status(500).json({ error });
+        res.json({ url: result.secure_url });
+      }
     );
 
-    streamifier.createReadStream(file.buffer).pipe(stream);
+    const bufferStream = new Readable();
+    bufferStream.push(file.buffer);
+    bufferStream.push(null);
+    bufferStream.pipe(stream);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 module.exports = router;
