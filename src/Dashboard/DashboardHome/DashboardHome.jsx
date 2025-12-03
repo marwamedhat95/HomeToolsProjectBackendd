@@ -264,22 +264,19 @@ const uploadImage = async (file) => {
           />
 
           <label className="image-label">صورة الخلفية الحالية:</label>
-          {hero.currentBackground && (
-            <img 
-              src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${hero.currentBackground}`} 
-              className="hero-current-image" 
-              alt="Current Hero Background"
-            />
-          )}
+         {hero.background && (
+  <img src={hero.background} className="hero-current-image" alt="Current Hero Background" />
+)}
+
 
           <input
   type="file"
   className="file-input"
-  onChange={async (e) => {
-    const file = e.target.files[0];
-    const url = await uploadImage(file); // هترفع على Cloudinary
-    setHero({ ...hero, background: url }); // حفظ رابط الصورة في state
-  }}
+ onChange={async (e) => {
+  const file = e.target.files[0];
+  const url = await uploadImage(file); // هترفع على Cloudinary
+  setHero(prev => ({ ...prev, background: url })); // رابط كامل من Cloudinary
+}}
 />
 
           <button className="primary-button hero-save-button">حفظ التغييرات</button>
