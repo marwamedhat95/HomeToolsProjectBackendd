@@ -16,9 +16,7 @@ router.post("/", upload.array("images", 10), async (req, res) => {
     console.log("REQ.BODY:", req.body);
     console.log("REQ.FILES:", req.files);
 
-    const files = req.files?.map(file => 
-      `https://hometoolsprojectbackendd-production.up.railway.app/uploads/${file.filename}`
-    ) || [];
+const files = req.files?.map(file => file.filename) || [];
 
     const color = req.body.color 
       ? Array.isArray(req.body.color) 

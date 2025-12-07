@@ -335,12 +335,12 @@ export default function Home() {
 
                     {/* حاوية الصورة: خلفية رمادية فاتحة */}
                     <div className="bg-gray-50 p-4 rounded-t-xl flex items-center justify-center">
-                        <img
-                            src={p.images?.[0]}
-                            alt={p.name}
-                            // تم تعديل object-cover إلى object-contain ليتناسب مع شكل الصورة
-                            className="w-full  object-contain rounded-lg"
-                        />
+                        <img 
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${p.images?.[0]}`} 
+                            alt={p.name} 
+                            className="product-thumb"
+                            />
+
                     </div>
 
                     {/* محتوى البطاقة (العنوان، السعر، الزر) */}
