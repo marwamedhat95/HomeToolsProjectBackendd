@@ -36,24 +36,25 @@ router.get("/", async (req, res) => {
 // POST – إضافة إعلان جديد
 router.post("/", upload.single("image"), async (req, res) => {
   try {
-    if (!req.file || !req.body.link)
+    if (!req.file || !req.body.link) {
       return res.status(400).json({ error: "Image and link are required" });
+    }
+
+    // المسار الصحيح للصورة
+    const imageUrl = `https://hometoolsprojectbackendd-production.up.railway.app/uploads/${req.file.filename}`;
 
     const newAd = new Ads({
-      image: req.file.filename,
+      image: imageUrl, // ← نخزّن اللينك كامل هنا
       link: req.body.link,
     });
 
     await newAd.save();
-
-    res.json({
-      ...newAd.toObject(),
-      image: `https://hometoolsprojectbackendd-production.up.railway.app/uploads/${newAd.image}`
-    });
+    res.json(newAd);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 // DELETE – حذف إعلان
 router.delete("/:id", async (req, res) => {
