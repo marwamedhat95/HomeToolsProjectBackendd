@@ -39,9 +39,16 @@ router.post("/", upload.single("image"), async (req, res) => {
     console.log("File received:", req.file);
     console.log("Link received:", req.body.link);
 
-    // رفع الصورة لـ Cloudinary
-    const uploaded = await cloudinary.uploader.upload(req.file.path, { folder: "ads" });
-    console.log("Cloudinary uploaded:", uploaded);
+    // رفع الصورة لـ Cloudinary مع try/catch داخلي
+    let uploaded;
+    try {
+      uploaded = await cloudinary.uploader.upload(req.file.path, { folder: "ads" });
+      console.log("Cloudinary uploaded:", uploaded);
+    } catch (cloudErr) {
+      console.error("Cloudinary upload error:", cloudErr);
+      fs.unlinkSync(req.file.path); // حذف الملف المؤقت حتى لو فشل
+      return res.status(500).json({ error: "Failed to upload image to Cloudinary" });
+    }
 
     fs.unlinkSync(req.file.path);
 
@@ -53,12 +60,12 @@ router.post("/", upload.single("image"), async (req, res) => {
     await newAd.save();
 
     res.json(newAd);
+
   } catch (err) {
     console.error("ERROR IN /ads POST:", err);
     res.status(500).json({ error: err.message });
   }
 });
-
 
 
 // -------------------
