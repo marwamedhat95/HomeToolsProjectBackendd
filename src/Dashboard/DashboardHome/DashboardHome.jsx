@@ -530,9 +530,6 @@ const uploadImage = async (file) => {
         </form>
 
         <hr className="divider" />
-
-        {/* ----------------- LIST HOME PRODUCTS ----------------- */}
-        <h3 className="section-subtitle">المنتجات الحالية:</h3>
        {/* ----------------- LIST HOME PRODUCTS ----------------- */}
 <h3 className="section-subtitle">المنتجات الحالية:</h3>
 <div className="products-scroll-container"> {/* 🆕 الحاوية للارتفاع والـ Scroll */}
