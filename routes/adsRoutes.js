@@ -20,7 +20,14 @@ const upload = multer({ storage: storage });
 router.get("/", async (req, res) => {
   try {
     const ads = await Ads.find().sort({ _id: -1 });
-    res.json(ads);
+
+    // رجّعي الصورة باللينك الكامل
+    const formatted = ads.map(ad => ({
+      ...ad.toObject(),
+      image: `https://hometoolsprojectbackendd-production.up.railway.app/uploads/${ad.image}`
+    }));
+
+    res.json(formatted);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -29,7 +36,8 @@ router.get("/", async (req, res) => {
 // POST – إضافة إعلان جديد
 router.post("/", upload.single("image"), async (req, res) => {
   try {
-    if (!req.file || !req.body.link) return res.status(400).json({ error: "Image and link are required" });
+    if (!req.file || !req.body.link)
+      return res.status(400).json({ error: "Image and link are required" });
 
     const newAd = new Ads({
       image: req.file.filename,
@@ -37,7 +45,11 @@ router.post("/", upload.single("image"), async (req, res) => {
     });
 
     await newAd.save();
-    res.json(newAd);
+
+    res.json({
+      ...newAd.toObject(),
+      image: `https://hometoolsprojectbackendd-production.up.railway.app/uploads/${newAd.image}`
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
