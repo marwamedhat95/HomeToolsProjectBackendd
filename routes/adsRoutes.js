@@ -36,16 +36,13 @@ router.post("/", upload.single("image"), async (req, res) => {
       return res.status(400).json({ error: "Image and link are required" });
     }
 
-    console.log("File path:", req.file.path); // نتأكد إن الملف موجود
+    console.log("File received:", req.file);
+    console.log("Link received:", req.body.link);
 
     // رفع الصورة لـ Cloudinary
-    const uploaded = await cloudinary.uploader.upload(req.file.path, {
-      folder: "ads"
-    });
+    const uploaded = await cloudinary.uploader.upload(req.file.path, { folder: "ads" });
+    console.log("Cloudinary uploaded:", uploaded);
 
-    console.log("Uploaded:", uploaded);
-
-    // حذف الملف المؤقت
     fs.unlinkSync(req.file.path);
 
     const newAd = new Ads({
@@ -56,9 +53,8 @@ router.post("/", upload.single("image"), async (req, res) => {
     await newAd.save();
 
     res.json(newAd);
-
   } catch (err) {
-    console.error("POST /ads ERROR:", err); // اطبع الخطأ كامل
+    console.error("ERROR IN /ads POST:", err);
     res.status(500).json({ error: err.message });
   }
 });
