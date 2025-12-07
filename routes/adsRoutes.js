@@ -36,17 +36,20 @@ router.post("/", upload.single("image"), async (req, res) => {
       return res.status(400).json({ error: "Image and link are required" });
     }
 
+    console.log("File path:", req.file.path); // نتأكد إن الملف موجود
+
     // رفع الصورة لـ Cloudinary
     const uploaded = await cloudinary.uploader.upload(req.file.path, {
       folder: "ads"
     });
 
+    console.log("Uploaded:", uploaded);
+
     // حذف الملف المؤقت
     fs.unlinkSync(req.file.path);
 
-    // حفظ الإعلان في الداتا
     const newAd = new Ads({
-      image: uploaded.secure_url, // رابط Cloudinary
+      image: uploaded.secure_url,
       link: req.body.link
     });
 
@@ -55,10 +58,12 @@ router.post("/", upload.single("image"), async (req, res) => {
     res.json(newAd);
 
   } catch (err) {
-    console.log(err);
+    console.error("POST /ads ERROR:", err); // اطبع الخطأ كامل
     res.status(500).json({ error: err.message });
   }
 });
+
+
 
 // -------------------
 // DELETE – حذف إعلان
