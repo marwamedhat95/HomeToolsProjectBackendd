@@ -37,7 +37,9 @@ return (
 <div
   className="w-full heightHero flex flex-col justify-center items-start p-8 text-white"
   style={{
-    backgroundImage: hero.background ? `url(${hero.background})` : undefined,
+    backgroundImage: hero.background 
+  ? `url(${hero.background}?v=${Date.now()})` 
+  : undefined,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
