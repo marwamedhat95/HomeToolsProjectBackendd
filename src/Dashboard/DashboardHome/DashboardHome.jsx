@@ -12,7 +12,8 @@ export default function DashboardHome() {
     currentBackground: "", // الصورة الموجودة
   });
   const [popups, setPopups] = useState({ show: false, message: "", type: "" });
-
+const [homeFiles, setHomeFiles] = useState([]);
+const [offerFiles, setOfferFiles] = useState([]);
   const showPopups = (msg, type = "success") => {
     setPopups({ show: true, message: msg, type });
     setTimeout(() => setPopups({ show: false, message: "", type: "" }), 2500);
@@ -158,8 +159,8 @@ const handleSubmits = async (e) => {
 
   try {
     // رفع كل الملفات على Cloudinary
-    const uploadedUrls = await Promise.all(files.map(file => uploadImage(file)));
-
+const filesToUpload = form.homeProduct ? homeFiles : offerFiles;
+const uploadedUrls = await Promise.all(filesToUpload.map(file => uploadImage(file)));
     const body = {
       ...form,
       images: uploadedUrls, // بدل الملفات، بعتي روابط الصور
@@ -523,11 +524,11 @@ const uploadImage = async (file) => {
           />
 
           <input 
-             type="file" 
-             multiple 
-             className="file-input"
-             onChange={(e) => setFiles([...e.target.files])} 
-          />
+              type="file" 
+              multiple 
+              className="file-input"
+              onChange={(e) => setHomeFiles([...e.target.files])} 
+            />
 
           <button className="primary-button">إضافة منتج الهوم</button>
         </form>
@@ -552,6 +553,7 @@ const uploadImage = async (file) => {
                             alt="product"
                             className="product-thumb"
                         />
+                        
                     ))}
                 </div>
 
@@ -648,7 +650,7 @@ const uploadImage = async (file) => {
             type="file" 
             multiple 
             className="file-input"
-            onChange={(e) => setFiles([...e.target.files])} 
+            onChange={(e) => setOfferFiles([...e.target.files])} 
           />
 
           <button className="primary-button offer-button">إضافة العرض</button>
