@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import './AdvertisementsManagement.css';
+import "./AdvertisementsManagement.css";
 
 export default function AdvertisementsManagement() {
   const [ads, setAds] = useState([]);
@@ -14,40 +14,76 @@ export default function AdvertisementsManagement() {
 
   const fetchAds = async () => {
     try {
-      const res = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/ads");
+      const res = await axios.get(
+        "https://hometoolsprojectbackendd-production.up.railway.app/api/ads"
+      );
       setAds(res.data || []);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleAddAd = async () => {
-    if (!image || !link) return alert("الرجاء إدخال الصورة والرابط");
-
+  // -----------------------
+  // رفع الصورة لـ Cloudinary
+  // -----------------------
+  const uploadToCloudinary = async (file) => {
     const formData = new FormData();
-    formData.append("image", image);
-    formData.append("link", link);
+    formData.append("file", file);
+    formData.append("upload_preset", "ml_default");
 
-    setLoading(true);
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/🔴🔴YOUR_REAL_CLOUD_NAME🔴🔴/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const data = await res.json();
+    return data.secure_url;
+  };
+
+  // -----------------------
+  // إضافة إعلان جديد
+  // -----------------------
+  const handleAddAd = async () => {
+    if (!image || !link) {
+      alert("يجب إدخال الصورة والرابط");
+      return;
+    }
+
     try {
-      const res = await axios.post("https://hometoolsprojectbackendd-production.up.railway.app/api/ads", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      setAds([res.data, ...ads]);
+      setLoading(true);
+
+      const imageURL = await uploadToCloudinary(image);
+
+      await axios.post(
+        "https://hometoolsprojectbackendd-production.up.railway.app/api/ads",
+        {
+          image: imageURL,
+          link: link,
+        }
+      );
+
       setImage(null);
       setLink("");
+      fetchAds();
     } catch (err) {
       console.error(err);
-      alert("حدث خطأ أثناء إضافة الإعلان");
     } finally {
       setLoading(false);
     }
   };
 
+  // -----------------------
+  // حذف إعلان
+  // -----------------------
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://hometoolsprojectbackendd-production.up.railway.app/api/ads/${id}`);
-      setAds(ads.filter(ad => ad._id !== id));
+      await axios.delete(
+        `https://hometoolsprojectbackendd-production.up.railway.app/api/ads/${id}`
+      );
+      setAds(ads.filter((ad) => ad._id !== id));
     } catch (err) {
       console.error(err);
     }
@@ -60,11 +96,13 @@ export default function AdvertisementsManagement() {
       {/* إضافة إعلان */}
       <div className="mb-6 border p-4 rounded shadow-md">
         <h3 className="font-semibold mb-2">إضافة إعلان جديد</h3>
+
         <input
           type="file"
           onChange={(e) => setImage(e.target.files[0])}
           className="mb-2 block"
         />
+
         <input
           type="text"
           placeholder="رابط الإعلان"
@@ -72,6 +110,7 @@ export default function AdvertisementsManagement() {
           onChange={(e) => setLink(e.target.value)}
           className="mb-2 block border p-2 rounded w-full"
         />
+
         <button
           onClick={handleAddAd}
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -83,16 +122,22 @@ export default function AdvertisementsManagement() {
 
       {/* قائمة الإعلانات */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {ads.map(ad => (
+        {ads.map((ad) => (
           <div key={ad._id} className="border p-3 rounded shadow relative">
             <img
               src={ad.image}
               alt="ad"
               className="w-full h-40 object-cover rounded mb-2"
             />
-            <a href={ad.link} target="_blank" className="text-blue-600 underline" rel="noreferrer">
+            <a
+              href={ad.link}
+              target="_blank"
+              className="text-blue-600 underline"
+              rel="noreferrer"
+            >
               {ad.link}
             </a>
+
             <button
               onClick={() => handleDelete(ad._id)}
               className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
