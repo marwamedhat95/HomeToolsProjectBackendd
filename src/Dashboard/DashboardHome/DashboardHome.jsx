@@ -153,41 +153,42 @@ const handleSubmits = async (e) => {
   };
 
   // ---------------- ADD PRODUCT ----------------
-  const handleSubmit = async (form, setForm) => {
-    if (!validateForm(form)) return;
+ const handleSubmit = async (form, setForm) => {
+  if (!validateForm(form)) return;
 
-    try {
-      const formData = new FormData();
-      formData.append("name", form.name);
-      formData.append("price", form.price);
-      formData.append("quantity", form.quantity);
-      formData.append("color", form.color);
-      formData.append("description", form.description);
-      formData.append("homeProduct", form.homeProduct);
-      formData.append("fridayOffer", form.fridayOffer);
+  try {
+    // رفع كل الملفات على Cloudinary
+    const uploadedUrls = await Promise.all(files.map(file => uploadImage(file)));
 
-      files.forEach((file) => formData.append("images", file));
+    const body = {
+      ...form,
+      images: uploadedUrls, // بدل الملفات، بعتي روابط الصور
+    };
 
-      await axios.post("https://hometoolsprojectbackendd-production.up.railway.app/api/products", formData);
+    await axios.post(
+      "https://hometoolsprojectbackendd-production.up.railway.app/api/products",
+      body
+    );
 
-      showPopup("تمت إضافة المنتج بنجاح 🎉", "success");
+    showPopup("تمت إضافة المنتج بنجاح 🎉", "success");
 
-      setForm({
-        ...form,
-        name: "",
-        price: "",
-        quantity: "",
-        color: "",
-        description: "",
-      });
+    setForm({
+      ...form,
+      name: "",
+      price: "",
+      quantity: "",
+      color: "",
+      description: "",
+    });
 
-      setFiles([]);
-      fetchProducts();
-    } catch (err) {
-      showPopup("حدث خطأ أثناء الإضافة", "error");
-      console.error(err);
-    }
-  };
+    setFiles([]);
+    fetchProducts();
+  } catch (err) {
+    showPopup("حدث خطأ أثناء الإضافة", "error");
+    console.error(err);
+  }
+};
+
 
   // ---------------- DELETE PRODUCT ----------------
   const deleteProduct = async (id) => {
@@ -394,10 +395,12 @@ const uploadImage = async (file) => {
 
                 // لو اختارت صور جديدة
                 if (editPopup.product.newImages) {
-                  editPopup.product.newImages.forEach((file) =>
-                    fd.append("images", file)
-                  );
-                }
+                    const uploadedUrls = await Promise.all(
+                      editPopup.product.newImages.map(file => uploadImage(file))
+                    );
+                    uploadedUrls.forEach(url => fd.append("images", url));
+                  }
+
 
                 await axios.put(
                   `https://hometoolsprojectbackendd-production.up.railway.app/api/products/${editPopup.product._id}`,
@@ -545,7 +548,7 @@ const uploadImage = async (file) => {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
+                            src={img}
                             alt="product"
                             className="product-thumb"
                         />
@@ -668,7 +671,7 @@ const uploadImage = async (file) => {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
+                            src={img}
                             alt="product"
                             className="product-thumb"
                         />
