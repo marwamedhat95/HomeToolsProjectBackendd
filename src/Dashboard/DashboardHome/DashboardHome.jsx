@@ -166,29 +166,10 @@ const handleSubmits = async (e) => {
       formData.append("homeProduct", form.homeProduct);
       formData.append("fridayOffer", form.fridayOffer);
 
-     const uploadedImages = [];
-for (let file of files) {
-  const url = await uploadImage(file); // دالة الرفع لـ Cloudinary
-  uploadedImages.push(url);
-}
+      files.forEach((file) => formData.append("images", file));
 
-// 2️⃣ جهزي الـ BODY
-const dataBody = {
-  name: form.name,
-  price: form.price,
-  quantity: form.quantity,
-  color: form.color,
-  description: form.description,
-  homeProduct: form.homeProduct,
-  fridayOffer: form.fridayOffer,
-  images: uploadedImages, // روابط Cloudinary
-};
+      await axios.post("https://hometoolsprojectbackendd-production.up.railway.app/api/products", formData);
 
-// 3️⃣ ابعتي للباك اند JSON مش FormData
-await axios.post(
-  "https://hometoolsprojectbackendd-production.up.railway.app/api/products",
-  dataBody
-);
       showPopup("تمت إضافة المنتج بنجاح 🎉", "success");
 
       setForm({
@@ -309,7 +290,6 @@ const uploadImage = async (file) => {
       </div>
 
       <hr className="divider" />
-
 
       {/* ----------------- GLOBAL POPUP (Products) ----------------- */}
       {popup.show && (
