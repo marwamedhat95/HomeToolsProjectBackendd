@@ -290,7 +290,7 @@ const uploadImage = async (file) => {
         </form>
       </div>
 
-      <hr className="divider" />
+        <hr className="divider" />
 
       {/* ----------------- GLOBAL POPUP (Products) ----------------- */}
       {popup.show && (
@@ -395,12 +395,10 @@ const uploadImage = async (file) => {
 
                 // لو اختارت صور جديدة
                 if (editPopup.product.newImages) {
-                    const uploadedUrls = await Promise.all(
-                      editPopup.product.newImages.map(file => uploadImage(file))
-                    );
-                    uploadedUrls.forEach(url => fd.append("images", url));
-                  }
-
+                  editPopup.product.newImages.forEach((file) =>
+                    fd.append("images", file)
+                  );
+                }
 
                 await axios.put(
                   `https://hometoolsprojectbackendd-production.up.railway.app/api/products/${editPopup.product._id}`,
@@ -533,6 +531,9 @@ const uploadImage = async (file) => {
         </form>
 
         <hr className="divider" />
+
+        {/* ----------------- LIST HOME PRODUCTS ----------------- */}
+        <h3 className="section-subtitle">المنتجات الحالية:</h3>
        {/* ----------------- LIST HOME PRODUCTS ----------------- */}
 <h3 className="section-subtitle">المنتجات الحالية:</h3>
 <div className="products-scroll-container"> {/* 🆕 الحاوية للارتفاع والـ Scroll */}
@@ -548,7 +549,7 @@ const uploadImage = async (file) => {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={img}
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                             alt="product"
                             className="product-thumb"
                         />
@@ -671,7 +672,7 @@ const uploadImage = async (file) => {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={img}
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                             alt="product"
                             className="product-thumb"
                         />
