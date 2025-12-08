@@ -32,7 +32,7 @@ export default function AdvertisementsManagement() {
     formData.append("upload_preset", "ml_default");
 
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/🔴🔴YOUR_REAL_CLOUD_NAME🔴🔴/image/upload",
+      "https://api.cloudinary.com/v1_1/dkhjcwrlw/image/upload",
       {
         method: "POST",
         body: formData,
