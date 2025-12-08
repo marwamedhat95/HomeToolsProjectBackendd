@@ -34,34 +34,28 @@ export default function DashboardHome() {
     }
   };
 
-const handleSubmits = async (e) => {
-  e.preventDefault();
+  const handleSubmits = async (e) => {
+    e.preventDefault();
 
-  try {
-    const res = await axios.put(
-      "https://hometoolsprojectbackendd-production.up.railway.app/api/hero",
-      {
-        title: hero.title,
-        description: hero.description,
-        buttonText: hero.buttonText,
-        buttonLink: hero.buttonLink,
-        background: hero.background,
-      }
-    );
+    const formData = new FormData();
+    formData.append("title", hero.title);
+    formData.append("description", hero.description);
+    formData.append("buttonText", hero.buttonText);
+    formData.append("buttonLink", hero.buttonLink);
 
-    setHero(prev => ({
-      ...prev,
-      ...res.data // تحديث الـ state من الـ API مباشرة
-    }));
+    if (hero.background) {
+      formData.append("background", hero.background);
+    }
 
-    showPopups("تم تحديث الـ Hero بنجاح");
-  } catch (err) {
-    console.error(err);
-    showPopups("حدث خطأ أثناء التحديث", "error");
-  }
-};
-
-
+    try {
+      await axios.put("https://hometoolsprojectbackendd-production.up.railway.app/api/hero", formData);
+      showPopups("تم تحديث الـ Hero بنجاح");
+      fetchHero();
+    } catch (err) {
+      console.error(err);
+      showPopups("حدث خطأ أثناء التحديث", "error");
+    }
+  };
 
   // ---------------- POPUP STATE ----------------
   const [popup, setPopup] = useState({ show: false, message: "", type: "" });
@@ -153,42 +147,41 @@ const handleSubmits = async (e) => {
   };
 
   // ---------------- ADD PRODUCT ----------------
- const handleSubmit = async (form, setForm) => {
-  if (!validateForm(form)) return;
+  const handleSubmit = async (form, setForm) => {
+    if (!validateForm(form)) return;
 
-  try {
-    // رفع كل الملفات على Cloudinary
-    const uploadedUrls = await Promise.all(files.map(file => uploadImage(file)));
+    try {
+      const formData = new FormData();
+      formData.append("name", form.name);
+      formData.append("price", form.price);
+      formData.append("quantity", form.quantity);
+      formData.append("color", form.color);
+      formData.append("description", form.description);
+      formData.append("homeProduct", form.homeProduct);
+      formData.append("fridayOffer", form.fridayOffer);
 
-    const body = {
-      ...form,
-      images: uploadedUrls, // بدل الملفات، بعتي روابط الصور
-    };
+      files.forEach((file) => formData.append("images", file));
 
-    await axios.post(
-      "https://hometoolsprojectbackendd-production.up.railway.app/api/products",
-      body
-    );
+      await axios.post("https://hometoolsprojectbackendd-production.up.railway.app/api/products", formData);
 
-    showPopup("تمت إضافة المنتج بنجاح 🎉", "success");
+      showPopup("تمت إضافة المنتج بنجاح 🎉", "success");
 
-    setForm({
-      ...form,
-      name: "",
-      price: "",
-      quantity: "",
-      color: "",
-      description: "",
-    });
+      setForm({
+        ...form,
+        name: "",
+        price: "",
+        quantity: "",
+        color: "",
+        description: "",
+      });
 
-    setFiles([]);
-    fetchProducts();
-  } catch (err) {
-    showPopup("حدث خطأ أثناء الإضافة", "error");
-    console.error(err);
-  }
-};
-
+      setFiles([]);
+      fetchProducts();
+    } catch (err) {
+      showPopup("حدث خطأ أثناء الإضافة", "error");
+      console.error(err);
+    }
+  };
 
   // ---------------- DELETE PRODUCT ----------------
   const deleteProduct = async (id) => {
@@ -271,26 +264,26 @@ const uploadImage = async (file) => {
           />
 
           <label className="image-label">صورة الخلفية الحالية:</label>
-   {hero.background && (
+         {hero.background && (
   <img src={hero.background} className="hero-current-image" alt="Current Hero Background" />
 )}
 
 
-<input
+          <input
   type="file"
   className="file-input"
-  onChange={async (e) => {
-    const file = e.target.files[0];
-    const url = await uploadImage(file); // هترفع على Cloudinary
-    setHero(prev => ({ ...prev, background: url })); // رابط كامل من Cloudinary
-  }}
+ onChange={async (e) => {
+  const file = e.target.files[0];
+  const url = await uploadImage(file); // هترفع على Cloudinary
+  setHero(prev => ({ ...prev, background: url })); // رابط كامل من Cloudinary
+}}
 />
 
           <button className="primary-button hero-save-button">حفظ التغييرات</button>
         </form>
       </div>
 
-        <hr className="divider" />
+      <hr className="divider" />
 
       {/* ----------------- GLOBAL POPUP (Products) ----------------- */}
       {popup.show && (
