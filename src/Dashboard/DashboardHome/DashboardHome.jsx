@@ -34,34 +34,28 @@ export default function DashboardHome() {
     }
   };
 
-const handleSubmits = async (e) => {
-  e.preventDefault();
+  const handleSubmits = async (e) => {
+    e.preventDefault();
 
-  try {
-    const res = await axios.put(
-      "https://hometoolsprojectbackendd-production.up.railway.app/api/hero",
-      {
-        title: hero.title,
-        description: hero.description,
-        buttonText: hero.buttonText,
-        buttonLink: hero.buttonLink,
-        background: hero.background,
-      }
-    );
+    const formData = new FormData();
+    formData.append("title", hero.title);
+    formData.append("description", hero.description);
+    formData.append("buttonText", hero.buttonText);
+    formData.append("buttonLink", hero.buttonLink);
 
-    setHero(prev => ({
-      ...prev,
-      ...res.data // تحديث الـ state من الـ API مباشرة
-    }));
+    if (hero.background) {
+      formData.append("background", hero.background);
+    }
 
-    showPopups("تم تحديث الـ Hero بنجاح");
-  } catch (err) {
-    console.error(err);
-    showPopups("حدث خطأ أثناء التحديث", "error");
-  }
-};
-
-
+    try {
+      await axios.put("https://hometoolsprojectbackendd-production.up.railway.app/api/hero", formData);
+      showPopups("تم تحديث الـ Hero بنجاح");
+      fetchHero();
+    } catch (err) {
+      console.error(err);
+      showPopups("حدث خطأ أثناء التحديث", "error");
+    }
+  };
 
   // ---------------- POPUP STATE ----------------
   const [popup, setPopup] = useState({ show: false, message: "", type: "" });
@@ -166,29 +160,10 @@ const handleSubmits = async (e) => {
       formData.append("homeProduct", form.homeProduct);
       formData.append("fridayOffer", form.fridayOffer);
 
-     const uploadedImages = [];
-for (let file of files) {
-  const url = await uploadImage(file); // دالة الرفع لـ Cloudinary
-  uploadedImages.push(url);
-}
+      files.forEach((file) => formData.append("images", file));
 
-// 2️⃣ جهزي الـ BODY
-const dataBody = {
-  name: form.name,
-  price: form.price,
-  quantity: form.quantity,
-  color: form.color,
-  description: form.description,
-  homeProduct: form.homeProduct,
-  fridayOffer: form.fridayOffer,
-  images: uploadedImages, // روابط Cloudinary
-};
+      await axios.post("https://hometoolsprojectbackendd-production.up.railway.app/api/products", formData);
 
-// 3️⃣ ابعتي للباك اند JSON مش FormData
-await axios.post(
-  "https://hometoolsprojectbackendd-production.up.railway.app/api/products",
-  dataBody
-);
       showPopup("تمت إضافة المنتج بنجاح 🎉", "success");
 
       setForm({
@@ -221,27 +196,6 @@ await axios.post(
 
   // ---------------- UPDATE PRODUCT (Helper function is removed, logic embedded) ----------------
   // تم إزالة دالة updateProduct، المنطق موجود مباشرة في زر الحفظ
-
-const uploadImage = async (file) => {
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "react_upload"); // الاسم اللي عملتيه في Cloudinary
-
-  try {
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dkhjcwrlw/image/upload",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-    const data = await res.json();
-    console.log("Uploaded image URL:", data.secure_url);
-    return data.secure_url;
-  } catch (err) {
-    console.error("Upload error:", err);
-  }
-};
 
   return (
     <div className="dashboard-page">
@@ -289,20 +243,19 @@ const uploadImage = async (file) => {
           />
 
           <label className="image-label">صورة الخلفية الحالية:</label>
-   {hero.background && (
-  <img src={hero.background} className="hero-current-image" alt="Current Hero Background" />
-)}
+          {hero.currentBackground && (
+            <img 
+              src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${hero.currentBackground}`} 
+              className="hero-current-image" 
+              alt="Current Hero Background"
+            />
+          )}
 
-
-<input
-  type="file"
-  className="file-input"
-  onChange={async (e) => {
-    const file = e.target.files[0];
-    const url = await uploadImage(file); // هترفع على Cloudinary
-    setHero(prev => ({ ...prev, background: url })); // رابط كامل من Cloudinary
-  }}
-/>
+          <input
+            type="file"
+            className="file-input"
+            onChange={(e) => setHero({ ...hero, background: e.target.files[0] })}
+          />
 
           <button className="primary-button hero-save-button">حفظ التغييرات</button>
         </form>
@@ -550,7 +503,8 @@ const uploadImage = async (file) => {
 
         <hr className="divider" />
 
-
+        {/* ----------------- LIST HOME PRODUCTS ----------------- */}
+        <h3 className="section-subtitle">المنتجات الحالية:</h3>
        {/* ----------------- LIST HOME PRODUCTS ----------------- */}
 <h3 className="section-subtitle">المنتجات الحالية:</h3>
 <div className="products-scroll-container"> {/* 🆕 الحاوية للارتفاع والـ Scroll */}
@@ -566,7 +520,7 @@ const uploadImage = async (file) => {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={img} 
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                             alt="product"
                             className="product-thumb"
                         />
@@ -689,7 +643,7 @@ const uploadImage = async (file) => {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={img} 
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                             alt="product"
                             className="product-thumb"
                         />
