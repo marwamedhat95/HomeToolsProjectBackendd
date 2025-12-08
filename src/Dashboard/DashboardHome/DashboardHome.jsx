@@ -310,6 +310,7 @@ const uploadImage = async (file) => {
 
       <hr className="divider" />
 
+
       {/* ----------------- GLOBAL POPUP (Products) ----------------- */}
       {popup.show && (
         <div className="fixed-popup global-message-popup">
@@ -550,7 +551,8 @@ const uploadImage = async (file) => {
 
         <hr className="divider" />
 
-
+        {/* ----------------- LIST HOME PRODUCTS ----------------- */}
+        <h3 className="section-subtitle">المنتجات الحالية:</h3>
        {/* ----------------- LIST HOME PRODUCTS ----------------- */}
 <h3 className="section-subtitle">المنتجات الحالية:</h3>
 <div className="products-scroll-container"> {/* 🆕 الحاوية للارتفاع والـ Scroll */}
@@ -566,7 +568,7 @@ const uploadImage = async (file) => {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={img} 
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                             alt="product"
                             className="product-thumb"
                         />
@@ -689,7 +691,7 @@ const uploadImage = async (file) => {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={img} 
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                             alt="product"
                             className="product-thumb"
                         />
