@@ -8,7 +8,7 @@ export default function DashboardHome() {
     description: "",
     buttonText: "",
     buttonLink: "",
-    background: null, // الصورة الجديدة
+    background: "", // الصورة الجديدة
     currentBackground: "", // الصورة الموجودة
   });
   const [popups, setPopups] = useState({ show: false, message: "", type: "" });
@@ -21,14 +21,15 @@ export default function DashboardHome() {
   const fetchHero = async () => {
     try {
       const res = await axios.get("https://hometoolsprojectbackendd-production.up.railway.app/api/hero");
-      setHero({
-        ...hero,
+     setHero(prev => ({
+        ...prev,
         title: res.data.title,
         description: res.data.description,
         buttonText: res.data.buttonText,
         buttonLink: res.data.buttonLink,
         currentBackground: res.data.background,
-      });
+        background: res.data.background,
+      }));
     } catch (err) {
       console.error(err);
     }
@@ -270,8 +271,12 @@ const uploadImage = async (file) => {
           />
 
           <label className="image-label">صورة الخلفية الحالية:</label>
-   {hero.background && (
-  <img src={hero.background} className="hero-current-image" alt="Current Hero Background" />
+  {hero.currentBackground && (
+  <img
+    src={hero.currentBackground}
+    className="hero-current-image"
+    alt="Current Hero Background"
+  />
 )}
 
 
