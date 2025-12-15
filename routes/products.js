@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
 
     const newProduct = new Product({
       name,
-      images, // array من روابط Cloudinary
+      images, // هنا الصور مجرد روابط Cloudinary
       description,
       price: Number(price),
       quantity: Number(quantity),
@@ -68,7 +68,7 @@ router.put('/:id', async (req, res) => {
 
     const updatedProduct = await Product.findByIdAndUpdate(req.params.id, updateData, { new: true });
 
-    res.json({ message: "تم التحديث بنجاح", product: updatedProduct });
+    res.json({ message: "Product updated", product: updatedProduct });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
@@ -79,7 +79,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
-    res.json({ message: 'تم حذف المنتج' });
+    res.json({ message: 'Product deleted' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
