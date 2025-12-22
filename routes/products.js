@@ -1,89 +1,116 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
+const multer = require('multer');
+const path = require('path');
 
-// ------------------- GET كل المنتجات -------------------
-router.get('/', async (req, res) => {
-  try {
-    const products = await Product.find().populate('category', 'name');
-    res.json(products);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
-  }
+// إعداد Multer
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, 'uploads/'),
+    filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
 });
+const upload = multer({ storage });
 
-// ------------------- GET منتج واحد -------------------
-router.get('/:id', async (req, res) => {
+router.post("/", upload.array("images", 10), async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id).populate('category', 'name');
-    res.json(product);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+    console.log("REQ.BODY:", req.body);
+    console.log("REQ.FILES:", req.files);
 
-// ------------------- POST إضافة منتج -------------------
-router.post('/', async (req, res) => {
-  try {
-    const { name, images, description, price, quantity, category, color, homeProduct, fridayOffer } = req.body;
+const files = req.files?.map(file => file.filename) || [];
+
+    const color = req.body.color 
+      ? Array.isArray(req.body.color) 
+        ? req.body.color 
+        : [req.body.color] 
+      : [];
 
     const newProduct = new Product({
-      name,
-      images, // هنا الصور مجرد روابط Cloudinary
-      description,
-      price: Number(price),
-      quantity: Number(quantity),
-      category,
-      color: Array.isArray(color) ? color : [color],
-      homeProduct: homeProduct === true || homeProduct === 'true',
-      fridayOffer: fridayOffer === true || fridayOffer === 'true'
+      name: req.body.name,
+      images: files,
+      description: req.body.description,
+      price: Number(req.body.price),
+      quantity: Number(req.body.quantity),
+      category: req.body.category,
+      color,
+      homeProduct: req.body.homeProduct === 'true',
+      fridayOffer: req.body.fridayOffer === 'true'
     });
 
     await newProduct.save();
+    console.log("SAVED PRODUCT:", newProduct);
     res.json(newProduct);
   } catch (err) {
-    console.error(err);
+    console.log("Error in POST /api/products:", err);
     res.status(500).json({ error: err.message });
   }
 });
 
-// ------------------- PUT تحديث منتج -------------------
-router.put('/:id', async (req, res) => {
-  try {
-    const { name, images, description, price, quantity, category, color, homeProduct, fridayOffer } = req.body;
 
+// جلب كل المنتجات
+router.get('/', async (req, res) => {
+    try {
+        const products = await Product.find().populate('category', 'name');
+        res.json(products);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+router.put('/:id', upload.array("images", 10), async (req, res) => {
+  try {
     const updateData = {
-      name,
-      description,
-      price,
-      quantity,
-      category,
-      color: Array.isArray(color) ? color : [color],
-      homeProduct: homeProduct === true || homeProduct === 'true',
-      fridayOffer: fridayOffer === true || fridayOffer === 'true'
+      name: req.body.name,
+      price: req.body.price,
+      quantity: req.body.quantity,
+      category: req.body.category,
+      description: req.body.description,
+      color: req.body.color
+        ? (Array.isArray(req.body.color) ? req.body.color : [req.body.color])
+        : []
     };
 
-    if (images && images.length > 0) updateData.images = images; // روابط Cloudinary
+    if (req.files && req.files.length > 0) {
+      updateData.images = req.files.map(f => f.filename);
+    }
 
-    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, updateData, { new: true });
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
 
     res.json({ message: "Product updated", product: updatedProduct });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
   }
 });
 
-// ------------------- DELETE حذف منتج -------------------
+
+
+// حذف منتج
 router.delete('/:id', async (req, res) => {
-  try {
-    await Product.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Product deleted' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
-  }
+    try {
+        await Product.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Product deleted' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
 });
+
+router.get('/:id', async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id).populate('category', 'name');
+        res.json(product);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 
 module.exports = router;
