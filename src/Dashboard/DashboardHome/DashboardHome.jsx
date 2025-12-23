@@ -398,26 +398,16 @@ const uploadImage = async (file) => {
                 fd.append("description", editPopup.product.description);
 
                 // لو اختارت صور جديدة
-              const imageUrls = [];
+                if (editPopup.product.newImages) {
+                  editPopup.product.newImages.forEach((file) =>
+                    fd.append("images", file)
+                  );
+                }
 
-                  if (editPopup.product.newImages) {
-                    for (let file of editPopup.product.newImages) {
-                      const url = await uploadImage(file);
-                      imageUrls.push(url);
-                    }
-                  }
-
-                 await axios.put(
-                        `https://hometoolsprojectbackendd-production.up.railway.app/api/products/${editPopup.product._id}`,
-                        {
-                          name: editPopup.product.name,
-                          price: editPopup.product.price,
-                          quantity: editPopup.product.quantity,
-                          color: editPopup.product.color,
-                          description: editPopup.product.description,
-                          images: imageUrls.length ? imageUrls : editPopup.product.images,
-                        }
-                      );
+                await axios.put(
+                  `https://hometoolsprojectbackendd-production.up.railway.app/api/products/${editPopup.product._id}`,
+                  fd
+                );
 
                 showPopup("تم التعديل بنجاح");
                 setEditPopup({ show: false, product: null });
@@ -563,7 +553,7 @@ const uploadImage = async (file) => {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={img}
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                             alt="product"
                             className="product-thumb"
                         />
@@ -686,7 +676,7 @@ const uploadImage = async (file) => {
                     {p.images?.map((img, index) => (
                         <img
                             key={index}
-                            src={img}
+                            src={`https://hometoolsprojectbackendd-production.up.railway.app/uploads/${img}`}
                             alt="product"
                             className="product-thumb"
                         />
